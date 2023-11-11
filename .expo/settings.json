@@ -1,3 +1,6 @@
 {
-  "urlRandomness": "nxmeKno"
+  "urlRandomness": "nxmeKno",
+  "dev": true,
+  "minify": false,
+  "https": false
 }
