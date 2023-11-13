@@ -1,12 +1,12 @@
 import { ListItem } from '@rneui/themed';
-import { useState } from 'react';
+import { useContext } from 'react';
 import AccordionContent from '../AccordionContent/AccordionContent';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { useExpanded } from '../../context/ExpandedContext';
+import ExpandedContext from '../../context/ExpandedContext.js';
 
 export default () => {
 
-    const { expandedConfiguracion, setExpandedIP, setExpandedConfiguracion, setExpandedSoporte } = useExpanded();
+    const { expandedConfiguracion, setExpandedIP, setExpandedConfiguracion, setExpandedSoporte } = useContext(ExpandedContext);
 
     const handlerPress = () => {
         setExpandedIP(false)

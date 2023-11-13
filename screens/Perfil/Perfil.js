@@ -4,9 +4,14 @@ import Icon from 'react-native-vector-icons/Feather';
 import InformacionPersonal from '../../components/InformacionPersonal/InformacionPersonal';
 import Soporte from '../../components/Soporte/Soporte';
 import Configuracion from '../../components/Configuracion/Configuracion';
-import { ExpandedProvider } from '../../context/ExpandedContext';
+import ExpandedContext from '../../context/ExpandedContext';
+import { useState } from 'react';
 
 export default () => {
+
+    const [expandedIP, setExpandedIP] = useState(false);
+    const [expandedConfiguracion, setExpandedConfiguracion] = useState(false);
+    const [expandedSoporte, setExpandedSoporte] = useState(false);
 
     return (
         <SafeAreaView>
@@ -26,11 +31,20 @@ export default () => {
                     <Text style={{ marginTop: 5, fontSize: 20, fontWeight: 'bold' }}>Marcelo Torres</Text>
                 </View>
 
-                <ExpandedProvider>
+                <ExpandedContext.Provider
+                    value={{
+                        expandedIP,
+                        setExpandedIP,
+                        expandedConfiguracion,
+                        setExpandedConfiguracion,
+                        expandedSoporte,
+                        setExpandedSoporte
+                    }}
+                >
                     <InformacionPersonal />
-                    <Configuracion />
                     <Soporte />
-                </ExpandedProvider>
+                    <Configuracion />
+                </ExpandedContext.Provider>
 
                 <View style={{margin: 20, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'center' }}>
                     <Icon name="log-out" size={20} color="#C41E3A" />
