@@ -7,6 +7,7 @@ import Carrito from './screens/Carrito/Carrito';
 import Compras from './screens/Compras/Compras';
 import Perfil from './screens/Perfil/Perfil';
 import { Avatar } from '@rneui/themed';
+import Test from './screens/Test/Test';
 
 const Drawer = createDrawerNavigator();
 
