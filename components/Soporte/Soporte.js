@@ -1,7 +1,7 @@
 import { ListItem } from '@rneui/themed';
 import { useContext } from 'react';
 import AccordionContent from '../AccordionContent/AccordionContent';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, Linking  } from 'react-native';
 import ExpandedContext from '../../context/ExpandedContext.js';
 
 export default () => {
@@ -14,6 +14,13 @@ export default () => {
         setExpandedSoporte(!expandedSoporte)
     }
 
+    const soporteContacto = '1168247438';
+
+    const abrirWhatsApp = () => {
+        const whatsappUrl = `https://wa.me/${soporteContacto}`;
+        Linking.openURL(whatsappUrl).catch(() => console.log('Error al abrir WhatsApp'));
+    };
+
     return (
         <ListItem.Accordion
             content={
@@ -23,7 +30,7 @@ export default () => {
             isExpanded={expandedSoporte}
         >
             <TouchableOpacity
-                onPress={() => console.log("Se abra chat con soporte")}
+                onPress={abrirWhatsApp}
             >
                 <ListItem>
                     <ListItem.Content>

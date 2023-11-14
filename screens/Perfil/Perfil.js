@@ -1,11 +1,12 @@
 import { Avatar } from '@rneui/themed';
-import { SafeAreaView, ScrollView, View, Text } from 'react-native';
+import { SafeAreaView, ScrollView, View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import InformacionPersonal from '../../components/InformacionPersonal/InformacionPersonal';
 import Soporte from '../../components/Soporte/Soporte';
 import Configuracion from '../../components/Configuracion/Configuracion';
 import ExpandedContext from '../../context/ExpandedContext';
 import { useState } from 'react';
+import { Button } from '@rneui/base';
 
 export default () => {
 
@@ -23,7 +24,7 @@ export default () => {
                         source={{ uri: 'https://randomuser.me/api/portraits/men/46.jpg' }}
                         avatarStyle={{
                             borderWidth: 4,
-                            borderColor: 'white',
+                            borderColor: '#123d5c',
                         }}
                     >
                         <Avatar.Accessory style={ { right: 17,bottom: 3}} size={33} />
@@ -47,10 +48,19 @@ export default () => {
                 </ExpandedContext.Provider>
 
                 <View style={{margin: 20, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'center' }}>
-                    <Icon name="log-out" size={20} color="#C41E3A" />
+                    <Icon name="log-out" size={20} color="#c31f2d" />
                     <Text style={{ color: '#C41E3A' }}>Cerrar sesión</Text>
                 </View>
             </ScrollView>
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    title: {
+        fontWeight: 'bold'
+    },
+    subtitle: {
+        color: 'grey'
+    },
+});

@@ -1,9 +1,10 @@
 import { View, Text } from "react-native"
+import CarritoItems from "../../components/CarritoItems/CarritoItems"
 
 export default () => {
     return(
         <View>
-            <Text>Soy carrito</Text>
+            <CarritoItems />
         </View>
     )
 }
