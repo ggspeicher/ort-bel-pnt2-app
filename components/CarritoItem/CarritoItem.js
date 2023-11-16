@@ -10,10 +10,11 @@ export default ({ id, nombre, precio, unidades, stock, urlPath, carrito, setCarr
 
     useEffect(() => {
 
-        // si se cambio la cantidad de un producto dentro del carrito tengo que actualizar todo
-
         // aviso al cliente si en determinado producto llega al max. de stock
         avisarMaxUnidades();
+
+        // si se cambio la cantidad de un producto dentro del carrito tengo que actualizar todo,
+        // entonces hago un setCarrito del carrito actualizado
 
         const productoParaActualizar = carrito.find((producto) => producto.id === id);
 
@@ -47,13 +48,18 @@ export default ({ id, nombre, precio, unidades, stock, urlPath, carrito, setCarr
         }
     };
 
+    const borrarUnidad = () => {
+        const carritoActualizado = carrito.filter( producto => producto.id !== id)
+        setCarrito(carritoActualizado);
+    };
+
     return (
         <View>
             <ListItem.Swipeable
-                rightContent={(reset) => (
+                rightContent={() => (
                     <Button
                         title="Quitar"
-                        onPress={() => reset()}
+                        onPress={borrarUnidad}
                         icon={{ name: 'delete', color: 'white' }}
                         buttonStyle={{ minHeight: '100%', backgroundColor: '#c31f2d' }}
                     />

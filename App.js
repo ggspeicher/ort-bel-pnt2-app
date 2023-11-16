@@ -17,7 +17,7 @@ export default function App() {
       <NavigationContainer>
         <Drawer.Navigator>
           <Drawer.Screen name="Carrito" component={Carrito} />
-          <Drawer.Screen name="Tu perfil" component={Perfil} />
+          <Drawer.Screen name="Perfil" component={Perfil} />
           <Drawer.Screen name="Compras" component={Compras} />
         </Drawer.Navigator>
       </NavigationContainer>

@@ -4,7 +4,7 @@ import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import CustomButton from "../CustomButton/CustomButton";
 import { useEffect, useState } from "react";
 
-export default ( { carrito } ) => {
+export default ( { carrito, setCarrito } ) => {
 
     const [tarifaEnvio, setTarifaEnvio] = useState(330)
     const [tarifaServicio, setTarifaServicio] = useState(200)
@@ -53,7 +53,7 @@ export default ( { carrito } ) => {
                 </View>
                 <View style={styles.containerBoton}>
                     <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={() => console.log('accion')} />
-                    <CustomButton style={styles.boton} text={'Vaciar carrito'} color={'#c31f2d'} width={'50'} height={'auto'} onPress={() => console.log('accion')} />
+                    <CustomButton style={styles.boton} text={'Vaciar carrito'} color={'#c31f2d'} width={'50'} height={'auto'} onPress={() => setCarrito([])} />
                 </View>
             </View>
         </>
