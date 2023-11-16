@@ -2,8 +2,30 @@ import { View, Text, StyleSheet } from "react-native"
 import Icon from 'react-native-vector-icons/Feather';
 import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import CustomButton from "../CustomButton/CustomButton";
+import { useEffect, useState } from "react";
 
-export default () => {
+export default ( { carrito } ) => {
+
+    const [tarifaEnvio, setTarifaEnvio] = useState(330)
+    const [tarifaServicio, setTarifaServicio] = useState(200)
+
+    const [total, setTotal] = useState(0);
+
+    const [subtotal, setSubtotal] = useState(0);
+
+    useEffect(() => {
+      const nuevoTotal = carrito.reduce((acumulador, producto) => {
+        const subtotal = producto.precio * producto.unidades;
+        return acumulador + subtotal;
+      }, 0);
+
+      setTotal(nuevoTotal);
+    }, [carrito]);
+
+    useEffect(() => {
+        setSubtotal(tarifaEnvio + tarifaServicio + total)
+    },[total])
+
     return (
         <>
             <View style={styles.container}>
@@ -14,20 +36,20 @@ export default () => {
                 <LineaDivisoria marginVertical={5}></LineaDivisoria>
                 <View style={styles.item}>
                     <Text>Productos</Text>
-                    <Text style={styles.itemPrecio}>$ 3000</Text>
+                    <Text style={styles.itemPrecio}>$ {total.toFixed(2)}</Text>
                 </View>
                 <View style={styles.item}>
                     <Text>Envío </Text>
-                    <Text style={styles.itemPrecio}>$ 500</Text>
+                    <Text style={styles.itemPrecio}>$ {tarifaEnvio.toFixed(2)}</Text>
                 </View>
                 <View style={styles.item}>
                     <Text>Tarifa de servicio</Text>
-                    <Text style={styles.itemPrecio}>$ 150</Text>
+                    <Text style={styles.itemPrecio}>$ {tarifaServicio.toFixed(2)}</Text>
                 </View>
                 <LineaDivisoria marginVertical={5}></LineaDivisoria>
                 <View style={styles.item}>
                     <Text style={styles.itemTextPrincipal}>Subtotal</Text>
-                    <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>$ 3650</Text>
+                    <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>$ { subtotal }</Text>
                 </View>
                 <View style={styles.containerBoton}>
                     <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={() => console.log('accion')} />
@@ -43,7 +65,6 @@ const styles = StyleSheet.create({
     container: {
         padding: 16,
         backgroundColor: 'white',
-        marginTop: 10
     },
     item: {
         display: 'flex',
