@@ -6,7 +6,7 @@ import CarritoVacio from "../../components/PantallaVacia/PantallaVacia"
 import PantallaVacia from "../../components/PantallaVacia/PantallaVacia"
 
 
-export default () => {
+export default ( [ carrito ]) => {
 
     const [carrito, setCarrito] = useState([
         {

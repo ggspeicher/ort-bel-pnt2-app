@@ -107,7 +107,7 @@ export default ({ carrito, setCarrito }) => {
                 </View>
                 <View style={styles.containerBoton}>
                     <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={comprar} />
-                    <CustomButton style={styles.boton} text={'Vaciar carrito'} color={'#c31f2d'} width={'50'} height={'auto'} onPress={() => setCarrito([])} />
+                    <CustomButton style={styles.boton} text={'Vaciar carrito'} color={'#c31f2d'} width={'auto'} height={'auto'} onPress={() => setCarrito([])} />
                 </View>
             </View>
         </>
