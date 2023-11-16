@@ -26,7 +26,7 @@ export default () => {
     useEffect(() => {
 
         const obtenerPerfil = async () => {
-            const q = query(collection(db, 'usuarios'), where('telefono', '==', 1168247430));
+            const q = query(collection(db, 'usuarios'), where('id', '==', 1));
 
             try {
                 const resultadoQuery = await getDocs(q);

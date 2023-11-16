@@ -2,7 +2,8 @@ import CarritoItems from "../../components/CarritoItems/CarritoItems"
 import FinalizarCompra from "../../components/FinalizarCompra/FinalizarCompra"
 import { ScrollView } from "react-native-gesture-handler"
 import { useState } from "react"
-import CarritoVacio from "../../components/CarritoVacio/CarritoVacio"
+import CarritoVacio from "../../components/PantallaVacia/PantallaVacia"
+import PantallaVacia from "../../components/PantallaVacia/PantallaVacia"
 
 
 export default () => {
@@ -33,10 +34,10 @@ export default () => {
             {carrito.length > 0 ? (
                 <>
                     <CarritoItems carrito={carrito} setCarrito={setCarrito} />
-                    <FinalizarCompra carrito={carrito} setCarrito={setCarrito}></FinalizarCompra>
+                    <FinalizarCompra carrito={carrito} setCarrito={setCarrito} ></FinalizarCompra>
                 </>
             ) : (
-                <CarritoVacio />
+                <PantallaVacia texto={'¡Tu carrito está vacío!'} />
             )}
         </ScrollView>
     )

@@ -1,10 +1,13 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, Alert } from "react-native"
 import Icon from 'react-native-vector-icons/Feather';
 import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import CustomButton from "../CustomButton/CustomButton";
 import { useEffect, useState } from "react";
+import { db } from '../../services/config'
+import { getDocs, getDoc, collection, query, where, addDoc } from 'firebase/firestore'
+import { async } from "@firebase/util";
 
-export default ( { carrito, setCarrito } ) => {
+export default ({ carrito, setCarrito }) => {
 
     const [tarifaEnvio, setTarifaEnvio] = useState(330)
     const [tarifaServicio, setTarifaServicio] = useState(200)
@@ -14,22 +17,73 @@ export default ( { carrito, setCarrito } ) => {
     const [subtotal, setSubtotal] = useState(0);
 
     useEffect(() => {
-      const nuevoTotal = carrito.reduce((acumulador, producto) => {
-        const subtotal = producto.precio * producto.unidades;
-        return acumulador + subtotal;
-      }, 0);
+        const nuevoTotal = carrito.reduce((acumulador, producto) => {
+            const subtotal = producto.precio * producto.unidades;
+            return acumulador + subtotal;
+        }, 0);
 
-      setTotal(nuevoTotal);
+        setTotal(nuevoTotal);
     }, [carrito]);
 
     useEffect(() => {
         setSubtotal(tarifaEnvio + tarifaServicio + total)
-    },[total])
+    }, [total])
+
+    const comprar = () => {
+        Alert.alert(
+            'Realizar compra',
+            'Al confirmar se procesará la compra',
+            [
+                {
+                    text: 'Volver',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Confirmar',
+                    onPress: procesoCompra,
+                    style: 'cancel',
+                }
+            ],
+            {
+                cancelable: true,
+                onDismiss: () =>
+                    Alert.alert(
+                        'This alert was dismissed by tapping outside of the alert dialog.',
+                    ),
+            },
+        );
+    }
+
+    const procesoCompra = async () => {
+
+        // del carrito solo me guardo la info importante (no hace falta traerme el stock tmb)
+        const detalles = carrito.map(producto => (
+            {
+                id: producto.id,
+                nombre: producto.nombre,
+                unidades: producto.unidades,
+                precio: producto.precio,
+                urlPath: producto.urlPath
+            }));
+
+        const total = carrito.reduce((total, producto) => total + producto.precio * producto.unidades, 0);
+
+        const compra = {
+            detalles: detalles,
+            fecha: new Date().toISOString(),
+            total: total
+        };
+
+        const compraString = JSON.stringify(compra);
+
+        console.log(compraString)
+
+    }
 
     return (
         <>
             <View style={styles.container}>
-                <View style={styles.itemPrincipal}> 
+                <View style={styles.itemPrincipal}>
                     <Icon name={'file-text'} size={20} color="black" />
                     <Text style={styles.itemTextPrincipal}>Resumen</Text>
                 </View>
@@ -49,16 +103,15 @@ export default ( { carrito, setCarrito } ) => {
                 <LineaDivisoria marginVertical={5}></LineaDivisoria>
                 <View style={styles.item}>
                     <Text style={styles.itemTextPrincipal}>Subtotal</Text>
-                    <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>$ { subtotal }</Text>
+                    <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>$ {subtotal}</Text>
                 </View>
                 <View style={styles.containerBoton}>
-                    <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={() => console.log('accion')} />
+                    <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={comprar} />
                     <CustomButton style={styles.boton} text={'Vaciar carrito'} color={'#c31f2d'} width={'50'} height={'auto'} onPress={() => setCarrito([])} />
                 </View>
             </View>
         </>
     )
-    //file-text
 }
 
 const styles = StyleSheet.create({

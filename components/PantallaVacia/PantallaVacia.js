@@ -3,7 +3,7 @@ import CustomButton from "../CustomButton/CustomButton"
 import { useNavigation } from '@react-navigation/native';
 
 
-export default () => {
+export default ( { texto } ) => {
 
     // por ahora lo redirijo a su perfil, pero cuando este home lo redirijo a home
     const navigation = useNavigation();
@@ -15,7 +15,7 @@ export default () => {
     return (
         <View style={styles.container}>
             <Text>
-                ¡Tu carrito está vacío!
+                { texto }
             </Text>
             <View style={styles.containerBoton}>
                 <CustomButton
