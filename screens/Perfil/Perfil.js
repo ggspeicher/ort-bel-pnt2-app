@@ -5,10 +5,47 @@ import InformacionPersonal from '../../components/InformacionPersonal/Informacio
 import Soporte from '../../components/Soporte/Soporte';
 import Configuracion from '../../components/Configuracion/Configuracion';
 import ExpandedContext from '../../context/ExpandedContext';
-import { useState } from 'react';
-import { Button } from '@rneui/base';
+import { useEffect, useState } from 'react';
+
+import { getDocs, collection, query, where } from 'firebase/firestore'
+// getDocs me permite obtener los documentos de una coleccion.
+// collection me permite obtener una coleccion.
+// query la uso cuando quiero generar una consulta.
+// where la uso para agregar filtros a mis consultas.
+
+// ahora me traigo mi referencia de la base de datos
+import { db } from '../../services/config'
+
+
+import { getAuth } from "firebase/auth";
 
 export default () => {
+
+    const [perfil, setPerfil] = useState({})
+
+    useEffect(() => {
+
+        const obtenerPerfil = async () => {
+            const q = query(collection(db, 'usuarios'), where('telefono', '==', 1168247430));
+
+            try {
+                const resultadoQuery = await getDocs(q);
+                
+                if (!resultadoQuery.empty) {
+                    setPerfil(resultadoQuery.docs[0].data());
+                }
+            } catch ( err ) {
+                console.log('Error al traer el usuario: ', err)
+            }
+        };
+
+        obtenerPerfil();
+
+        //const auth = getAuth();
+        //const user = auth.currentUser;
+        //setPerfil(user)
+
+    },[])
 
     const [expandedIP, setExpandedIP] = useState(false);
     const [expandedConfiguracion, setExpandedConfiguracion] = useState(false);
@@ -29,7 +66,7 @@ export default () => {
                     >
                         <Avatar.Accessory style={ { right: 17,bottom: 3}} size={33} />
                     </Avatar>
-                    <Text style={{ marginTop: 5, fontSize: 20, fontWeight: 'bold' }}>Marcelo Torres</Text>
+                    <Text style={{ marginTop: 5, fontSize: 20, fontWeight: 'bold' }}>{perfil.nombre}</Text>
                 </View>
 
                 <ExpandedContext.Provider
@@ -42,7 +79,7 @@ export default () => {
                         setExpandedSoporte
                     }}
                 >
-                    <InformacionPersonal />
+                    <InformacionPersonal perfil={perfil} />
                     <Soporte />
                     <Configuracion />
                 </ExpandedContext.Provider>

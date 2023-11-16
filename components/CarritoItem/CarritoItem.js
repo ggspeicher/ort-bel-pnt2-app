@@ -30,7 +30,7 @@ export default () => {
                             <Text>$ 9.000</Text>
                         </View>
                     </View>
-                    <View style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <View style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
                         <Button buttonStyle={styles.boton}>+</Button>
                         <Button buttonStyle={styles.boton}>-</Button>
                     </View>
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
         height: 100,
       },
     boton: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         borderRadius: 25,
         backgroundColor: '#123d5c',
         justifyContent: 'center',

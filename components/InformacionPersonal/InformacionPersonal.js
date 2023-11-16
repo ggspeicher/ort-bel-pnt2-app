@@ -4,9 +4,10 @@ import { StyleSheet } from 'react-native';
 import ExpandedContext from '../../context/ExpandedContext';
 import { useContext } from 'react';
 
-export default () => {
+export default ( { perfil } ) => {
 
     const { expandedIP, setExpandedIP, setExpandedConfiguracion, setExpandedSoporte } = useContext(ExpandedContext);
+    const { nombre, telefono, correo, direccion } = perfil
 
     const handlerPress = () => {
         setExpandedIP(!expandedIP)
@@ -25,25 +26,25 @@ export default () => {
         <ListItem>
             <ListItem.Content>
                 <ListItem.Title style={styles.title}>NOMBRE</ListItem.Title>
-                <ListItem.Subtitle style={styles.subtitle}>Marcelo Torres</ListItem.Subtitle>
+                <ListItem.Subtitle style={styles.subtitle}>{ nombre }</ListItem.Subtitle>
             </ListItem.Content>
         </ListItem>
         <ListItem>
             <ListItem.Content>
                 <ListItem.Title style={styles.title}>TELEFONO</ListItem.Title>
-                <ListItem.Subtitle style={styles.subtitle}> 1168247438 </ListItem.Subtitle>
+                <ListItem.Subtitle style={styles.subtitle}>{ telefono }</ListItem.Subtitle>
             </ListItem.Content>
         </ListItem >
         <ListItem >
             <ListItem.Content>
                 <ListItem.Title style={styles.title}>CORREO</ListItem.Title>
-                <ListItem.Subtitle style={styles.subtitle}> marcelotorres@gmail.com </ListItem.Subtitle>
+                <ListItem.Subtitle style={styles.subtitle}>{ correo }</ListItem.Subtitle>
             </ListItem.Content>
         </ListItem>
         <ListItem >
             <ListItem.Content>
                 <ListItem.Title style={styles.title}>DIRECCION</ListItem.Title>
-                <ListItem.Subtitle style={styles.subtitle}>Av. Siempre Viva 3447</ListItem.Subtitle>
+                <ListItem.Subtitle style={styles.subtitle}> {direccion} </ListItem.Subtitle>
             </ListItem.Content>
         </ListItem>
     </ListItem.Accordion>
