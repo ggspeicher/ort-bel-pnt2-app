@@ -16,22 +16,26 @@ import {
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../services/config';
 import { app } from '../../services/config';
+import { useNavigation } from '@react-navigation/native';
 
 export default () => {
   //const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
-
+  const navigation = useNavigation();
   const handleCreateAccount = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log('Cuenta creada con exito');
         const user = userCredential.user;
         console.log(user);
+        Alert.alert('Usuario creado con exito, ya podes iniciar sesion');
+        navigation.navigate('Login');
       })
       .catch((error) => {
         console.log(error);
+        Alert.alert(error.message);
       });
   };
 
@@ -41,7 +45,7 @@ export default () => {
         console.log('Usuario autenticado:');
         const user = userCredential.user;
         console.log(user);
-        //Falta redirigir a otra pantalla
+        navigation.navigate('Compras');
       })
       .catch((error) => {
         console.error('Error de autenticación:', error.message);
