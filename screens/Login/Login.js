@@ -5,13 +5,48 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
 
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../services/config';
+import { app } from '../../services/config';
+
 export default () => {
+  //const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
 
+  const handleCreateAccount = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log('Cuenta creada con exito');
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log('Usuario autenticado:');
+        const user = userCredential.user;
+        console.log(user);
+        //Falta redirigir a otra pantalla
+      })
+      .catch((error) => {
+        console.error('Error de autenticación:', error.message);
+        Alert.alert(error.message);
+      });
     console.log('Email:', email);
     console.log('Contraseña:', password);
   };
@@ -34,6 +69,12 @@ export default () => {
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Iniciar Sesión</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonCrear}
+        onPress={handleCreateAccount}
+      >
+        <Text style={styles.buttonText}>Crear Cuenta</Text>
       </TouchableOpacity>
     </View>
   );
@@ -59,6 +100,12 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  buttonCrear: {
+    backgroundColor: 'green',
     padding: 10,
     borderRadius: 5,
   },

@@ -7,6 +7,8 @@ import {
   StyleSheet,
 } from 'react-native';
 
+/// Ver si se hace en esta pantalla en particular o directamente se registra con email y password en la pantalla login
+
 export default Registro = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
