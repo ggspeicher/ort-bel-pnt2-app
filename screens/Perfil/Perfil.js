@@ -6,22 +6,12 @@ import Soporte from '../../components/Soporte/Soporte';
 import Configuracion from '../../components/Configuracion/Configuracion';
 import ExpandedContext from '../../context/ExpandedContext';
 import { useEffect, useState } from 'react';
-import ServicioPerfil from '../../services/ServicioPerfil';
+import { usePerfil } from '../../context/PerfilContext';
 
 export default () => {
 
-    const [perfil, setPerfil] = useState({})
-
-    useEffect(() => {
-        const obtenerPerfil = async () => {
-            try {
-                setPerfil(await ServicioPerfil.obtenerPerfilPorUsuario(1));
-            } catch (err) {
-                console.error(err)
-            }
-        };
-        obtenerPerfil();
-    }, [])
+    const { perfil } = usePerfil();
+    const { nombre } = perfil
 
     const [expandedIP, setExpandedIP] = useState(false);
     const [expandedConfiguracion, setExpandedConfiguracion] = useState(false);
@@ -42,7 +32,7 @@ export default () => {
                     >
                         <Avatar.Accessory style={{ right: 17, bottom: 3 }} size={33} />
                     </Avatar>
-                    <Text style={{ marginTop: 5, fontSize: 20, fontWeight: 'bold' }}>{perfil.nombre}</Text>
+                    <Text style={{ marginTop: 5, fontSize: 20, fontWeight: 'bold' }}>{nombre}</Text>
                 </View>
 
                 <ExpandedContext.Provider
@@ -55,7 +45,7 @@ export default () => {
                         setExpandedSoporte
                     }}
                 >
-                    <InformacionPersonal perfil={perfil} />
+                    <InformacionPersonal/>
                     <Soporte />
                     <Configuracion />
                 </ExpandedContext.Provider>

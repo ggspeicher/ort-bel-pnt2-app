@@ -8,18 +8,28 @@ import { getDocs, collection, query, where } from 'firebase/firestore';
 import { db } from '../services/config';
 
 class ServicioPerfil {
+
+  constructor() {
+    this.perfil = null;
+  }
+
   static async obtenerPerfilPorUsuario(userId) {
-    const q = query(collection(db, 'usuarios'), where('id', '==', userId));
+    if (this.perfil) {
+      return this.perfil;
+    } else {
+      const q = query(collection(db, 'usuarios'), where('id', '==', userId));
 
-    try {
-      const resultadoQuery = await getDocs(q);
+      try {
+        const resultadoQuery = await getDocs(q);
 
-      if (!resultadoQuery.empty) {
-        return resultadoQuery.docs[0].data();
-      } 
-    } catch (err) {
-      console.error('Error al obtener el perfil: ', err);
-      throw err;
+        if (!resultadoQuery.empty) {
+          this.perfil = resultadoQuery.docs[0].data();
+          return this.perfil;
+        }
+      } catch (err) {
+        console.error('Error al obtener el perfil: ', err);
+        throw err;
+      }
     }
   }
 }

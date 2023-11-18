@@ -4,8 +4,9 @@ import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import CustomButton from "../CustomButton/CustomButton";
 import { useEffect, useState } from "react";
 import { db } from '../../services/config'
-import { getDocs, getDoc, collection, query, where, addDoc, doc } from 'firebase/firestore'
+import { getDocs, getDoc, collection, query, where, addDoc, doc, updateDoc } from 'firebase/firestore'
 import { async } from "@firebase/util";
+import { arrayUnion } from 'firebase/firestore';
 
 export default ({ carrito, setCarrito }) => {
 
@@ -73,12 +74,6 @@ export default ({ carrito, setCarrito }) => {
             fecha: new Date().toISOString(),
             total: total
         };
-
-        const compraString = JSON.stringify(compra);
-
-        addDoc(doc(db, 'usuarios', 1, 'compras'), {
-            compra
-        });
 
     }
 

@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import AccordionContent from '../AccordionContent/AccordionContent';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import ExpandedContext from '../../context/ExpandedContext.js';
+import { useNavigation } from '@react-navigation/native';
 
 export default () => {
 
@@ -14,6 +15,12 @@ export default () => {
         setExpandedSoporte(false)
     }
 
+    const navigation = useNavigation();
+
+    const abrirEditarPerfil = () => {
+        navigation.navigate('EditarPerfil')
+    };
+
     return (
         <ListItem.Accordion
             content={
@@ -23,7 +30,7 @@ export default () => {
             isExpanded={expandedConfiguracion}
         >
             <TouchableOpacity
-                onPress={() => console.log("Se abre pantalla para editar informacion")}
+                onPress={abrirEditarPerfil}
             >
                 <ListItem>
                     <ListItem.Content>
