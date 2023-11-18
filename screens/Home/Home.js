@@ -28,9 +28,13 @@ export default () => {
 
             try {
                 const resultadoQuery = await getDocs(q);
+                const productosData = [];
                 
                 if (!resultadoQuery.empty) {
-                    setProductos(resultadoQuery.docs[0].data());
+                  resultadoQuery.forEach(doc => {
+                    productosData.push(doc.data());
+                  });
+                   setProductos(productosData);
                 }
             } catch ( err ) {
                 console.log('Error al traer los productos: ', err)
