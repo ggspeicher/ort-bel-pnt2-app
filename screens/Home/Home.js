@@ -2,13 +2,8 @@ import { SafeAreaView, ScrollView, View, Text, StyleSheet, Button, TextInput } f
 import { useEffect, useState } from 'react';
 
 import { getDocs, collection, query } from 'firebase/firestore'
-// getDocs me permite obtener los documentos de una coleccion.
-// collection me permite obtener una coleccion.
-// query la uso cuando quiero generar una consulta.
-// where la uso para agregar filtros a mis consultas.
-
-// ahora me traigo mi referencia de la base de datos
 import { db } from '../../services/config'
+import ProductGrid from '../../components/Productos/Productos';
 
 
 export default () => {
@@ -39,8 +34,6 @@ export default () => {
         obtenerProductos();
     },[])
 
-    
-    console.log(productos)
     return (
         <SafeAreaView>
           <View>
@@ -49,15 +42,9 @@ export default () => {
             />
              <Button title="Buscar" />
           </View>
-        <ScrollView>
-        {productos.map((producto, index) => (
         <View>
-          <Text style={styles.nombreProducto}>{producto.nombre}</Text>
-          <Text style={styles.precio}>{producto.precio}</Text>
-          <Text style={styles.stock}>{producto.stock}</Text>
+          <ProductGrid productos= {productos} />
         </View>
-      ))}
-        </ScrollView>
         </SafeAreaView>
 
     )
