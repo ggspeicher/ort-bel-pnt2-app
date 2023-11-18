@@ -16,14 +16,12 @@ import {
   initializeAuth,
   getReactNativePersistence,
 } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '../../services/config';
-import { app } from '../../services/config';
+import { app, auth } from '../../services/config';
 import { useNavigation } from '@react-navigation/native';
 
 export default () => {
   //const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  //const auth = getAuth(app);
 
   //VER ASYNC STORAGE
 
