@@ -1,10 +1,4 @@
-import { Avatar } from '@rneui/themed';
-import { SafeAreaView, ScrollView, View, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import InformacionPersonal from '../../components/InformacionPersonal/InformacionPersonal';
-import Soporte from '../../components/Soporte/Soporte';
-import Configuracion from '../../components/Configuracion/Configuracion';
-import ExpandedContext from '../../context/ExpandedContext';
+import { SafeAreaView, ScrollView, View, Text, StyleSheet, Button, TextInput } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { getDocs, collection, query } from 'firebase/firestore'
@@ -20,6 +14,7 @@ import { db } from '../../services/config'
 export default () => {
 
     const [productos, setProductos] = useState([])
+    const [buscar, setBuscar] = useState([])
 
     useEffect(() => {
 
@@ -48,9 +43,15 @@ export default () => {
     console.log(productos)
     return (
         <SafeAreaView>
+          <View>
+            <TextInput placeholder="Nombre de producto" 
+            onChangeText={(buscar) => setBuscar(buscar)}
+            />
+             <Button title="Buscar" />
+          </View>
         <ScrollView>
         {productos.map((producto, index) => (
-        <View key={producto.id} style={styles.productoContainer}>
+        <View>
           <Text style={styles.nombreProducto}>{producto.nombre}</Text>
           <Text style={styles.precio}>{producto.precio}</Text>
           <Text style={styles.stock}>{producto.stock}</Text>
@@ -64,11 +65,6 @@ export default () => {
 }
 
 const styles = StyleSheet.create({
-    productoContainer: {
-      padding: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: 'lightgray',
-    },
     nombreProducto: {
       fontSize: 18,
       fontWeight: 'bold',
