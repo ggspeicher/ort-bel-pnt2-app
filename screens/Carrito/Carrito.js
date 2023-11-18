@@ -4,6 +4,7 @@ import { ScrollView } from "react-native-gesture-handler"
 import { useState } from "react"
 import CarritoVacio from "../../components/PantallaVacia/PantallaVacia"
 import PantallaVacia from "../../components/PantallaVacia/PantallaVacia"
+import { View, StyleSheet } from "react-native"
 
 
 export default () => {
@@ -42,3 +43,6 @@ export default () => {
         </ScrollView>
     )
 }
+
+const styles = StyleSheet.create({
+});

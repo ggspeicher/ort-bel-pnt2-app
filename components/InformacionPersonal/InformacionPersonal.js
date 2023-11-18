@@ -3,10 +3,12 @@ import AccordionContent from '../AccordionContent/AccordionContent';
 import { StyleSheet } from 'react-native';
 import ExpandedContext from '../../context/ExpandedContext';
 import { useContext } from 'react';
+import { usePerfil } from '../../context/PerfilContext';
 
-export default ( { perfil } ) => {
+export default () => {
 
     const { expandedIP, setExpandedIP, setExpandedConfiguracion, setExpandedSoporte } = useContext(ExpandedContext);
+    const { perfil } = usePerfil();
     const { nombre, telefono, correo, direccion } = perfil
 
     const handlerPress = () => {
