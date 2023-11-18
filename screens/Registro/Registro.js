@@ -1,23 +1,59 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
 
-/// Ver si se hace en esta pantalla en particular o directamente se registra con email y password en la pantalla login
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+
+import { app, db } from '../../services/config';
+import { useNavigation } from '@react-navigation/native';
+import { addDoc, collection } from 'firebase/firestore';
 
 export default Registro = () => {
+  const auth = getAuth(app);
+  const navigation = useNavigation();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [telefono, setTelefono] = useState('');
 
-  const handleRegister = () => {
-    console.log('Nombre:', name);
-    console.log('Email:', email);
-    console.log('Contraseña:', password);
+  const handleCreateAccount = async () => {
+    try {
+      // Crear cuenta en Authentication
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log('Cuenta creada con éxito:', user);
+      Alert.alert('Usuario creado con éxito, ya puedes iniciar sesión');
+
+      // Almacena datos adicionales en Firestore
+      const userId = user.uid;
+      addDoc(collection(db, 'usuarios'), {
+        nombre: name,
+        correo: email,
+        telefono: telefono,
+        direccion: direccion,
+        id: userId,
+        compras: [],
+        imgPerfil: '',
+      });
+
+      console.log('Datos adicionales almacenados en Firestore');
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error('Error al crear usuario:', error);
+      Alert.alert(error.message);
+    }
   };
 
   return (
@@ -25,7 +61,7 @@ export default Registro = () => {
       <Text style={styles.title}>Registro</Text>
       <TextInput
         style={styles.input}
-        placeholder="Nombre"
+        placeholder="Nombre Completo"
         value={name}
         onChangeText={(text) => setName(text)}
       />
@@ -42,7 +78,19 @@ export default Registro = () => {
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+      <TextInput
+        style={styles.input}
+        placeholder="Direccion"
+        value={direccion}
+        onChangeText={(text) => setDireccion(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Telefono"
+        value={telefono}
+        onChangeText={(number) => setTelefono(number)}
+      />
+      <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
         <Text style={styles.buttonText}>Registrarse</Text>
       </TouchableOpacity>
     </View>

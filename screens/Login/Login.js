@@ -8,10 +8,13 @@ import {
   Alert,
 } from 'react-native';
 
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   getAuth,
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  initializeAuth,
+  getReactNativePersistence,
 } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../services/config';
@@ -21,24 +24,15 @@ import { useNavigation } from '@react-navigation/native';
 export default () => {
   //const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+
+  //VER ASYNC STORAGE
+
+  // const auth = initializeAuth(app, {
+  //   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+  // });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
-
-  const handleCreateAccount = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log('Cuenta creada con exito');
-        const user = userCredential.user;
-        console.log(user);
-        Alert.alert('Usuario creado con exito, ya podes iniciar sesion');
-        navigation.navigate('Login');
-      })
-      .catch((error) => {
-        console.log(error);
-        Alert.alert(error.message);
-      });
-  };
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -54,6 +48,10 @@ export default () => {
       });
     console.log('Email:', email);
     console.log('Contraseña:', password);
+  };
+
+  const handleCreateAccount = () => {
+    navigation.navigate('Registro');
   };
 
   return (
