@@ -4,7 +4,7 @@ import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import CustomButton from "../CustomButton/CustomButton";
 import { useEffect, useState } from "react";
 import { db } from '../../services/config'
-import { getDocs, getDoc, collection, query, where, addDoc } from 'firebase/firestore'
+import { getDocs, getDoc, collection, query, where, addDoc, doc } from 'firebase/firestore'
 import { async } from "@firebase/util";
 
 export default ({ carrito, setCarrito }) => {
@@ -76,7 +76,9 @@ export default ({ carrito, setCarrito }) => {
 
         const compraString = JSON.stringify(compra);
 
-        console.log(compraString)
+        addDoc(doc(db, 'usuarios', 1, 'compras'), {
+            compra
+        });
 
     }
 
@@ -87,7 +89,7 @@ export default ({ carrito, setCarrito }) => {
                     <Icon name={'file-text'} size={20} color="black" />
                     <Text style={styles.itemTextPrincipal}>Resumen</Text>
                 </View>
-                <LineaDivisoria marginVertical={5}></LineaDivisoria>
+                <LineaDivisoria></LineaDivisoria>
                 <View style={styles.item}>
                     <Text>Productos</Text>
                     <Text style={styles.itemPrecio}>$ {total.toFixed(2)}</Text>
@@ -100,7 +102,7 @@ export default ({ carrito, setCarrito }) => {
                     <Text>Tarifa de servicio</Text>
                     <Text style={styles.itemPrecio}>$ {tarifaServicio.toFixed(2)}</Text>
                 </View>
-                <LineaDivisoria marginVertical={5}></LineaDivisoria>
+                <LineaDivisoria></LineaDivisoria>
                 <View style={styles.item}>
                     <Text style={styles.itemTextPrincipal}>Subtotal</Text>
                     <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>$ {subtotal}</Text>
@@ -133,7 +135,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         fontWeight: 'bold',
-        gap: 5
+        gap: 5,
+        alignItems: 'center'
     },
     itemTextPrincipal: {
         fontWeight: 'bold'

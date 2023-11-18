@@ -3,8 +3,10 @@ import { ListItem } from '@rneui/themed';
 import { Button } from "@rneui/base";
 import { useEffect, useState } from "react";
 
-export default ({ id, nombre, precio, unidades, stock, urlPath, carrito, setCarrito }) => {
+export default ({ producto, carrito, setCarrito }) => {
 
+    const { id, nombre, precio, unidades, stock, urlPath } = producto
+    
     const [cantidad, setCantidad] = useState(unidades);
     const [maxUnidades, setMaxUnidades] = useState(false);
 
@@ -49,51 +51,49 @@ export default ({ id, nombre, precio, unidades, stock, urlPath, carrito, setCarr
     };
 
     const borrarUnidad = () => {
-        const carritoActualizado = carrito.filter( producto => producto.id !== id)
+        const carritoActualizado = carrito.filter(producto => producto.id !== id)
         setCarrito(carritoActualizado);
     };
 
     return (
-        <View>
-            <ListItem.Swipeable
-                rightContent={() => (
+        <ListItem.Swipeable
+            rightContent={() => (
+                <Button
+                    title="Quitar"
+                    onPress={borrarUnidad}
+                    icon={{ name: 'delete', color: 'white' }}
+                    buttonStyle={{ minHeight: '100%', backgroundColor: '#c31f2d' }}
+                />
+            )}
+        >
+            <ListItem.Content style={{ display: 'flex', flexDirection: 'row', alignItems: "center", gap: 10, justifyContent: 'flex-start', width: '100%', flex: 1 }}>
+                <Image
+                    source={require('../../assets/trago.jpg')}
+                    style={styles.img}
+                />
+                <View style={{ display: 'flex', flex: 2 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text>{nombre}</Text>
+                    </View>
+                    <View style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                        <Text style={{ color: 'gray' }}><Text style={{ fontWeight: 'bold' }}>{cantidad} u.</Text> x $ {precio.toFixed(2)}</Text>
+                        <Text>$ {(precio * cantidad).toFixed(2)}</Text>
+                        {maxUnidades ? <Text style={{ color: '#c31f2d', fontWeight: 'bold' }}>MÁX. STOCK</Text> : <Text />}
+                    </View>
+                </View>
+                <View style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
                     <Button
-                        title="Quitar"
-                        onPress={borrarUnidad}
-                        icon={{ name: 'delete', color: 'white' }}
-                        buttonStyle={{ minHeight: '100%', backgroundColor: '#c31f2d' }}
-                    />
-                )}
-            >
-                <ListItem.Content style={{ display: 'flex', flexDirection: 'row', alignItems: "center", gap: 10, justifyContent: 'flex-start', width: '100%', flex: 1 }}>
-                    <Image
-                        source={require('../../assets/trago.jpg')}
-                        style={styles.img}
-                    />
-                    <View style={{ display: 'flex', flex: 2 }}>
-                        <View style={{ flex: 1 }}>
-                            <Text>{nombre}</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-                            <Text style={{ color: 'gray' }}><Text style={{ fontWeight: 'bold' }}>{cantidad} u.</Text> x $ {precio.toFixed(2)}</Text>
-                            <Text>$ {(precio * cantidad).toFixed(2)}</Text>
-                            {maxUnidades ? <Text style={{ color: '#c31f2d', fontWeight: 'bold' }}>MÁX. STOCK</Text> : <Text />}
-                        </View>
-                    </View>
-                    <View style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-                        <Button
-                            buttonStyle={styles.boton}
-                            onPress={incrementarUnidades}
-                        >+</Button>
-                        <Button
-                            buttonStyle={styles.boton}
-                            onPress={decrementarUnidades}
-                        >-</Button>
-                    </View>
-                </ListItem.Content>
-                <ListItem.Chevron />
-            </ListItem.Swipeable>
-        </View>
+                        buttonStyle={styles.boton}
+                        onPress={incrementarUnidades}
+                    >+</Button>
+                    <Button
+                        buttonStyle={styles.boton}
+                        onPress={decrementarUnidades}
+                    >-</Button>
+                </View>
+            </ListItem.Content>
+            <ListItem.Chevron />
+        </ListItem.Swipeable>
     )
 }
 
