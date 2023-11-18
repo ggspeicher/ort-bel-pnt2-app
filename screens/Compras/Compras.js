@@ -1,13 +1,21 @@
+
+import { View, Text } from 'react-native';
+import { db } from '../../services/config';
+import { getDocs, collection, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { ScrollView } from "react-native-gesture-handler";
-import PantallaVacia from "../../components/PantallaVacia/PantallaVacia";
-import CompraItems from "../../components/CompraItems/CompraItems";
+import { ScrollView } from 'react-native-gesture-handler';
+import PantallaVacia from '../../components/PantallaVacia/PantallaVacia';
+import CompraItems from '../../components/CompraItems/CompraItems';
+import { Button } from 'react-native-elements';
 import ServicioCompras from '../../services/ServicioCompras';
 
 export default () => {
+  const [compras, setCompras] = useState([]);
 
-    const [compras, setCompras] = useState([])
-
+  useEffect(() => {
+    const obtenerCompras = async () => {
+      const q = query(collection(db, 'usuarios'), where('id', '==', 1));
+      
     useEffect(() => {
         const obtenerCompras = async () => {
           try {
