@@ -6,11 +6,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import Carrito from './screens/Carrito/Carrito';
 import Compras from './screens/Compras/Compras';
 import Perfil from './screens/Perfil/Perfil';
+import Login from './screens/Login/Login';
+import Registro from './screens/Registro/Registro';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
-
   return (
     <>
       <StatusBar style="auto" />
@@ -19,6 +20,8 @@ export default function App() {
           <Drawer.Screen name="Carrito" component={Carrito} />
           <Drawer.Screen name="Perfil" component={Perfil} />
           <Drawer.Screen name="Compras" component={Compras} />
+          <Drawer.Screen name="Login" component={Login} />
+          <Drawer.Screen name="Registro" component={Registro} />
         </Drawer.Navigator>
       </NavigationContainer>
     </>
