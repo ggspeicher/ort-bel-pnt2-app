@@ -21,8 +21,8 @@ import { useNavigation } from '@react-navigation/native';
 export default () => {
   //const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  const [email, setEmail] = useState([]);
-  const [password, setPassword] = useState([]);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
   const handleCreateAccount = () => {
