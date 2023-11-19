@@ -1,47 +1,58 @@
 import React from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Dimensions, Image } from 'react-native';
 
 const ProductGrid = ({ productos }) => {
     const renderProductItem = ({ item }) => (
-      <View style={styles.item}>
-        <Text>{item.nombre}</Text>
-        <Text>Precio: {item.precio}</Text>
-        <Text>Stock: {item.stock}</Text>
+        <View style={styles.column}>
+        <View style={styles.item}>
+          <Image source={{ uri: item.path }} style={styles.image} />
+          <Text>{item.nombre}</Text>
+          <Text>Precio: {item.precio}</Text>
+          <Text>Stock: {item.stock}</Text>
+        </View>
       </View>
     );
-  
-    const keyExtractor = (item, index) => index.toString();
+
+  const keyExtractor = (item, index) => {
+    if (typeof item.id === 'number') {
+      return item.id.toString();
+    }
+    return index.toString(); // Usar el índice como clave si el ID no es un número
+  };
   
     return (
-      <View>
+        <View style={styles.container}>
         <FlatList
           data={productos}
+          numColumns={2} // Para mostrar dos elementos por fila
           renderItem={renderProductItem}
           keyExtractor={keyExtractor}
-          horizontal
-          contentContainerStyle={styles.list}
-          style={{ width: '100%' }}
+          contentContainerStyle={styles.container}
         />
       </View>
     );
   };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  list: {
-    paddingHorizontal: 10,
-  },
-  item: {
-    margin: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    width: 'auto', // El ancho será dinámico según el tamaño del contenido
-    maxWidth: 200,
-  },
-});
+  const styles = StyleSheet.create({
+    container: {
+      paddingHorizontal: 5,
+      paddingTop: 10,
+    },
+    item: {
+      borderWidth: 1,
+      borderColor: '#ccc',
+      borderRadius: 5,
+      padding: 10,
+      marginBottom: 10,
+      width: Dimensions.get('window').width / 2 - 15, // Para mostrar dos elementos por fila
+    },
+    image: {
+      width: '100%',
+      height: 100,
+      marginBottom: 5,
+      resizeMode: 'cover',
+      borderRadius: 5,
+    },
+  });
 
 export default ProductGrid;
