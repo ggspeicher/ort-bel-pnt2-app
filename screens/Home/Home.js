@@ -1,15 +1,17 @@
-import { SafeAreaView, View, StyleSheet, Button, TextInput } from 'react-native';
+import { SafeAreaView, View, StyleSheet,TextInput } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { getDocs, collection, query } from 'firebase/firestore'
 import { db } from '../../services/config'
 import ProductGrid from '../../components/Productos/Productos';
+import SearchButton from '../../components/Search/Search';
 
 
 export default () => {
 
     const [productos, setProductos] = useState([])
-    const [buscar, setBuscar] = useState([])
+    const [productosFiltrados, setProductosFiltrados] = useState([]);
+    const [buscar, setBuscar] = useState('');
 
     useEffect(() => {
 
@@ -25,6 +27,7 @@ export default () => {
                     productosData.push(doc.data());
                   });
                    setProductos(productosData);
+                   setProductosFiltrados(productosData);
                 }
             } catch ( err ) {
                 console.log('Error al traer los productos: ', err)
@@ -34,6 +37,14 @@ export default () => {
         obtenerProductos();
     },[])
     console.log(productos)
+
+    useEffect(() => {
+      // Verifica si el campo de búsqueda está vacío y muestra todos los productos
+      if (buscar === '') {
+        setProductosFiltrados(productos);
+      }
+    }, [buscar, productos]);
+
     return (
         <SafeAreaView>
           <View style={styles.container}>
@@ -42,10 +53,14 @@ export default () => {
             placeholder="Nombre de producto"
             onChangeText={(text) => setBuscar(text)}
       />
-      <Button title="Buscar" color="#4CAF50" />
+      <SearchButton
+          productos={productos}
+          setProductosFiltrados={setProductosFiltrados}
+          buscar={buscar}
+        />
           </View>
         <View>
-          <ProductGrid productos= {productos} />
+        <ProductGrid productos={productosFiltrados} />
         </View>
         </SafeAreaView>
 
