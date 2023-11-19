@@ -1,9 +1,13 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, Dimensions, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const ProductGrid = ({ productos }) => {
-    const renderProductItem = ({ item }) => (
-        <View style={styles.column}>
+  const navigation = useNavigation();
+
+  const renderProductItem = ({ item }) => (
+    <TouchableWithoutFeedback onPress={() => handleDetalleProducto(item)}>
+      <View style={styles.column}>
         <View style={styles.item}>
           <Image source={{ uri: item.path }} style={styles.image} />
           <Text>{item.nombre}</Text>
@@ -11,27 +15,34 @@ const ProductGrid = ({ productos }) => {
           <Text>Stock: {item.stock}</Text>
         </View>
       </View>
-    );
+    </TouchableWithoutFeedback>
+  );
 
   const keyExtractor = (item, index) => {
     if (typeof item.id === 'number') {
       return item.id.toString();
     }
-    return index.toString(); // Usar el índice como clave si el ID no es un número
+    return index.toString();
   };
-  
-    return (
-        <View style={styles.container}>
-        <FlatList
-          data={productos}
-          numColumns={2} // Para mostrar dos elementos por fila
-          renderItem={renderProductItem}
-          keyExtractor={keyExtractor}
-          contentContainerStyle={styles.container}
-        />
-      </View>
-    );
+
+  const handleDetalleProducto = (producto) => {
+    navigation.navigate('DetalleProducto', {
+      producto,
+    });
   };
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={productos}
+        numColumns={2}
+        renderItem={renderProductItem}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={styles.container}
+      />
+    </View>
+  );
+};
 
   const styles = StyleSheet.create({
     container: {
