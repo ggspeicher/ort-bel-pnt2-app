@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button } from 'react-native';
+import { View,TextInput, Button, StyleSheet } from 'react-native';
+import { useEffect, useState } from 'react';
 
-const SearchButton = ({ productos, setProductosFiltrados, buscar }) => {
+const SearchProduct = ({ productos, setProductosFiltrados}) => {
+    const [buscar, setBuscar] = useState('');
     const handleBuscar = () => {
       // Implementa la lógica de búsqueda aquí utilizando 'buscar'
       const productosFiltrados = productos.filter(producto =>
@@ -10,13 +12,50 @@ const SearchButton = ({ productos, setProductosFiltrados, buscar }) => {
       setProductosFiltrados(productosFiltrados);
     };
   
+    const handleSubmitEditing = () => {
+      handleBuscar();
+    };
+
+    useEffect(() => {
+      // Verifica si el campo de búsqueda está vacío y muestra todos los productos
+      if (buscar === '') {
+        setProductosFiltrados(productos);
+      }
+    }, [buscar, productos]);
+
     return (
-      <Button
-        title="Buscar"
-        color="#4CAF50"
-        onPress={handleBuscar}
-      />
+      <View style={styles.container}>
+        <TextInput
+            style={styles.input}
+            placeholder="Nombre de producto"
+            onChangeText={(text) => setBuscar(text)}
+            onSubmitEditing={handleSubmitEditing}
+          />
+        <Button
+          title="Buscar"
+          color="#4CAF50"
+          onPress={handleBuscar}
+        />
+      </View>
     );
   };
 
-export default SearchButton;
+  const styles = StyleSheet.create({
+    input: {
+      flex: 1,
+      marginRight: 10,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      borderRadius: 5,
+      padding: 10,
+    },
+    container: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 10,
+      marginBottom: 10,
+    },
+    });
+
+export default SearchProduct;

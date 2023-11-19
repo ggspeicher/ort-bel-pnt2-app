@@ -1,16 +1,15 @@
-import { SafeAreaView, View, StyleSheet,TextInput } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { getDocs, collection, query } from 'firebase/firestore'
 import { db } from '../../services/config'
 import ProductGrid from '../../components/Productos/Productos';
-import SearchButton from '../../components/Search/Search';
+import SearchProduct from '../../components/Search/Search';
 
 
 export default () => {
     const [productos, setProductos] = useState([])
     const [productosFiltrados, setProductosFiltrados] = useState([]);
-    const [buscar, setBuscar] = useState('');
 
     useEffect(() => {
         const obtenerProductos = async () => {
@@ -35,26 +34,12 @@ export default () => {
         obtenerProductos();
     },[])
 
-
-    useEffect(() => {
-      // Verifica si el campo de búsqueda está vacío y muestra todos los productos
-      if (buscar === '') {
-        setProductosFiltrados(productos);
-      }
-    }, [buscar, productos]);
-
     return (
         <SafeAreaView>
-          <View style={styles.container}>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre de producto"
-            onChangeText={(text) => setBuscar(text)}
-          />
-        <SearchButton
+        <View>
+        <SearchProduct
           productos={productos}
           setProductosFiltrados={setProductosFiltrados}
-          buscar={buscar}
         />
         </View>
         <View>
@@ -64,21 +49,3 @@ export default () => {
     )
 
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    marginBottom: 10,
-  },
-  input: {
-    flex: 1,
-    marginRight: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-  },
-  });
