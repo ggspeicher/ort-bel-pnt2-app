@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Button, TextInput } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { getDocs, collection, query } from 'firebase/firestore'
@@ -36,11 +36,13 @@ export default () => {
     console.log(productos)
     return (
         <SafeAreaView>
-          <View>
-            <TextInput placeholder="Nombre de producto" 
-            onChangeText={(buscar) => setBuscar(buscar)}
-            />
-             <Button title="Buscar" />
+          <View style={styles.container}>
+          <TextInput
+            style={styles.input}
+            placeholder="Nombre de producto"
+            onChangeText={(text) => setBuscar(text)}
+      />
+      <Button title="Buscar" color="#4CAF50" />
           </View>
         <View>
           <ProductGrid productos= {productos} />
@@ -52,16 +54,19 @@ export default () => {
 }
 
 const styles = StyleSheet.create({
-    nombreProducto: {
-      fontSize: 18,
-      fontWeight: 'bold',
-    },
-    precio: {
-      fontSize: 16,
-      color: 'green',
-    },
-    stock: {
-        fontSize: 16,
-        color: 'black',
-      },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  input: {
+    flex: 1,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+  },
   });
