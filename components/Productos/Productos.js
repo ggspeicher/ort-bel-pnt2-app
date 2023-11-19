@@ -3,20 +3,15 @@ import { View, Text, FlatList, StyleSheet, Dimensions, Image } from 'react-nativ
 
 const ProductGrid = ({ productos }) => {
     const renderProductItem = ({ item }) => (
-      <View style={styles.item}>
-        <Image source={{ uri: item.path }} style={styles.image} />
-        <Text>{item.nombre}</Text>
-        <Text>Precio: {item.precio}</Text>
-        <Text>Stock: {item.stock}</Text>
+        <View style={styles.column}>
+        <View style={styles.item}>
+          <Image source={{ uri: item.path }} style={styles.image} />
+          <Text>{item.nombre}</Text>
+          <Text>Precio: {item.precio}</Text>
+          <Text>Stock: {item.stock}</Text>
+        </View>
       </View>
     );
-  
-  const groupedProducts = [];
-  let i = 0;
-  while (i < productos.length) {
-    groupedProducts.push(productos.slice(i, i + 2));
-    i += 2;
-  }
 
   const keyExtractor = (item, index) => {
     if (typeof item.id === 'number') {
