@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
-export default ( { ph, value, set } ) => {
+export default ( { ph, value, set, kbType } ) => {
+
+  const keyboardType = String(kbType)
 
   return (
     <View style={styles.container}>
@@ -19,6 +21,7 @@ export default ( { ph, value, set } ) => {
         onChangeText={text => {
           set(text);
         }}
+        keyboardType={keyboardType}
       />
     </View>
   );

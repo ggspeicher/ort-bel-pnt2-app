@@ -6,16 +6,24 @@ import Soporte from '../../components/Soporte/Soporte';
 import Configuracion from '../../components/Configuracion/Configuracion';
 import ExpandedContext from '../../context/ExpandedContext';
 import { useEffect, useState } from 'react';
-import { usePerfil } from '../../context/PerfilContext';
+import ServicioPerfil from '../../services/ServicioPerfil';
 
 export default () => {
-
-    const { perfil } = usePerfil();
-    const { nombre } = perfil
 
     const [expandedIP, setExpandedIP] = useState(false);
     const [expandedConfiguracion, setExpandedConfiguracion] = useState(false);
     const [expandedSoporte, setExpandedSoporte] = useState(false);
+
+    const [perfil, setPerfil] = useState({})
+
+    useEffect(() => {
+        const obtenerDatos = async () => {
+            setPerfil(await ServicioPerfil.obtenerPerfil("1"));
+        };
+        obtenerDatos();
+    }, []);
+
+    const { nombre, imgPerfil } = perfil
 
     return (
         <SafeAreaView>
@@ -24,7 +32,7 @@ export default () => {
                     <Avatar
                         size={160}
                         rounded
-                        source={{ uri: 'https://randomuser.me/api/portraits/men/46.jpg' }}
+                        source={{ uri: imgPerfil ? imgPerfil : 'https://www.centraltrials.com/wp-content/uploads/2016/11/User-Default.jpg' }}
                         avatarStyle={{
                             borderWidth: 4,
                             borderColor: '#123d5c',
@@ -32,7 +40,7 @@ export default () => {
                     >
                         <Avatar.Accessory style={{ right: 17, bottom: 3 }} size={33} />
                     </Avatar>
-                    <Text style={{ marginTop: 5, fontSize: 20, fontWeight: 'bold' }}>{nombre}</Text>
+                    <Text style={{ marginTop: 5, fontSize: 20, fontWeight: 'bold' }}>{ nombre ? nombre : 'cargando...'}</Text>
                 </View>
 
                 <ExpandedContext.Provider
@@ -45,7 +53,7 @@ export default () => {
                         setExpandedSoporte
                     }}
                 >
-                    <InformacionPersonal/>
+                    <InformacionPersonal {...perfil} />
                     <Soporte />
                     <Configuracion />
                 </ExpandedContext.Provider>

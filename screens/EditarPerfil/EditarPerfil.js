@@ -1,39 +1,54 @@
-import { Input } from 'react-native-elements';
 import { useEffect, useState } from 'react';
-import { TextInput } from 'react-native-gesture-handler';
 import { View, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import InputDefault from '../../components/InputDefault/InputDefault';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import ServicioPerfil from '../../services/ServicioPerfil';
-import { usePerfil } from '../../context/PerfilContext';
+import { addDoc, collection } from '@firebase/firestore';
+import { db } from '../../services/config';
 
 
 export default () => {
 
-    const { perfil, actualizarPerfil } = usePerfil()
-    
+    const [perfil, setPerfil] = useState({})
+
+    useEffect(() => {
+        const obtenerDatos = async () => {
+            setPerfil(await ServicioPerfil.obtenerPerfil("1"));
+        };
+        obtenerDatos();
+    }, []);
+
     const { telefono, direccion } = perfil
-    // telefono es luego convertido a string xq en placeholder no se puede nums y tira error
     
     const [tel, setTel] = useState()
     const [dir, setDirec] = useState()
 
     const validarInfo = () => {
-        return tel && dir;
+        if(tel && dir){
+            return true
+        } else {
+            return false
+        }
     }
 
-    const actualizar = () => {
+    const actualizar = async () => {
         if(validarInfo) {
             const obj = {
                 ...perfil,
                 telefono: tel,
                 direccion: dir
             }
-            actualizarPerfil(obj);
+            await ServicioPerfil.actualizarPerfil("1", obj);
+            restablecer()
+            await ServicioPerfil.obtenerPerfil("1", true);
         }
     }
 
+    const restablecer = () => {
+        setTel('')
+        setDirec('')
+    }
 
     return (
         <View style={styles.container}>
@@ -42,18 +57,18 @@ export default () => {
                     <Icon name='phone' size={20} color="black" />
                     <Text>Telefono</Text>
                 </View>
-                <InputDefault ph={String(telefono)} value={tel} set={setTel}></InputDefault>
+                <InputDefault ph={telefono} value={tel} set={setTel} kbType={'number-pad'}></InputDefault>
             </View>
             <View>
                 <View style={styles.content}>
                     <Icon name='calendar' size={20} color="black" />
                     <Text>Dirección</Text>
                 </View>
-                <InputDefault ph={direccion} value={dir} set={setDirec}></InputDefault>
+                <InputDefault ph={direccion} value={dir} set={setDirec} kbType={'default'}></InputDefault>
             </View>
             <View style={styles.containerBoton}>
                 <CustomButton style={styles.boton} text={'Confirmar edición'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={actualizar} />
-                <CustomButton style={styles.boton} text={'Restablecer'} color={'#c31f2d'} width={'auto'} height={'auto'} />
+                <CustomButton style={styles.boton} text={'Restablecer'} color={'#c31f2d'} width={'auto'} height={'auto'} onPress={restablecer} />
             </View>
         </View>
     )

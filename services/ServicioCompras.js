@@ -1,4 +1,4 @@
-import { getDocs, collection, query, where } from 'firebase/firestore';
+import { getDocs, collection, query, where, orderBy } from 'firebase/firestore';
 // getDocs me permite obtener los documentos de una coleccion.
 // collection me permite obtener una coleccion.
 // query la uso cuando quiero generar una consulta.
@@ -8,8 +8,11 @@ import { getDocs, collection, query, where } from 'firebase/firestore';
 import { db } from '../services/config';
 
 class ServicioCompras {
-  static async obtenerComprasPorUsuario(userId) {
-    const q = query(collection(db, 'usuarios'), where('id', '==', userId));
+  static async obtenerCompras(userId) {
+    const q = query(
+      collection(db, 'usuarios'),
+      where('id', '==', userId)
+    );
 
     try {
       const resultadoQuery = await getDocs(q);
