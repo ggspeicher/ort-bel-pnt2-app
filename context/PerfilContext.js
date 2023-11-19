@@ -11,7 +11,7 @@ export const PerfilProvider = ({ children }) => {
     useEffect(() => {
         const obtenerPerfil = async () => {
             try {
-                setPerfil(await ServicioPerfil.obtenerPerfilPorUsuario(1));
+                setPerfil(await ServicioPerfil.obtenerPerfilPorUsuario("1"));
             } catch (err) {
                 console.error(err)
             }
