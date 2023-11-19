@@ -33,7 +33,7 @@ export default () => {
 
         obtenerProductos();
     },[])
-
+    console.log(productos)
     return (
         <SafeAreaView>
           <View>
