@@ -5,9 +5,8 @@ import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import SubItemCompra from "../SubItemCompra/SubItemCompra";
 
 export default ({ compra }) => {
-    const compraJson = JSON.parse(compra)
 
-    const { detalles, fecha, total } = compraJson
+    const { detalles, fecha, total } = compra
 
     moment.locale('ES');
     const dia = moment(fecha).format('DD [de] MMMM YYYY');

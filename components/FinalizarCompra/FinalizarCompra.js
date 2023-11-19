@@ -7,6 +7,7 @@ import { db } from '../../services/config'
 import { getDocs, getDoc, collection, query, where, addDoc, doc, updateDoc } from 'firebase/firestore'
 import { async } from "@firebase/util";
 import { arrayUnion } from 'firebase/firestore';
+import ServicioCompras from "../../services/ServicioCompras";
 
 export default ({ carrito, setCarrito }) => {
 
@@ -30,31 +31,6 @@ export default ({ carrito, setCarrito }) => {
         setSubtotal(tarifaEnvio + tarifaServicio + total)
     }, [total])
 
-    const comprar = () => {
-        Alert.alert(
-            'Realizar compra',
-            'Al confirmar se procesará la compra',
-            [
-                {
-                    text: 'Volver',
-                    style: 'cancel',
-                },
-                {
-                    text: 'Confirmar',
-                    onPress: procesoCompra,
-                    style: 'cancel',
-                }
-            ],
-            {
-                cancelable: true,
-                onDismiss: () =>
-                    Alert.alert(
-                        'This alert was dismissed by tapping outside of the alert dialog.',
-                    ),
-            },
-        );
-    }
-
     const procesoCompra = async () => {
 
         // del carrito solo me guardo la info importante (no hace falta traerme el stock tmb)
@@ -74,6 +50,9 @@ export default ({ carrito, setCarrito }) => {
             fecha: new Date().toISOString(),
             total: total
         };
+
+        await ServicioCompras.agregarCompra("1", compra)
+        console.log('ac1');
 
     }
 
@@ -103,7 +82,7 @@ export default ({ carrito, setCarrito }) => {
                     <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>$ {subtotal}</Text>
                 </View>
                 <View style={styles.containerBoton}>
-                    <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={comprar} />
+                    <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={procesoCompra} />
                     <CustomButton style={styles.boton} text={'Vaciar carrito'} color={'#c31f2d'} width={'auto'} height={'auto'} onPress={() => setCarrito([])} />
                 </View>
             </View>
