@@ -8,15 +8,13 @@ import SearchButton from '../../components/Search/Search';
 
 
 export default () => {
-
     const [productos, setProductos] = useState([])
     const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [buscar, setBuscar] = useState('');
 
     useEffect(() => {
-
         const obtenerProductos = async () => {
-            const q = query(collection(db, 'productos'));
+        const q = query(collection(db, 'productos'));
 
             try {
                 const resultadoQuery = await getDocs(q);
@@ -36,7 +34,7 @@ export default () => {
 
         obtenerProductos();
     },[])
-    console.log(productos)
+
 
     useEffect(() => {
       // Verifica si el campo de búsqueda está vacío y muestra todos los productos
@@ -52,18 +50,17 @@ export default () => {
             style={styles.input}
             placeholder="Nombre de producto"
             onChangeText={(text) => setBuscar(text)}
-      />
-      <SearchButton
+          />
+        <SearchButton
           productos={productos}
           setProductosFiltrados={setProductosFiltrados}
           buscar={buscar}
         />
-          </View>
+        </View>
         <View>
         <ProductGrid productos={productosFiltrados} />
         </View>
         </SafeAreaView>
-
     )
 
 }
