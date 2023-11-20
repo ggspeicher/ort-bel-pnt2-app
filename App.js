@@ -5,12 +5,11 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Carrito from './screens/Carrito/Carrito';
 import Compras from './screens/Compras/Compras';
-import Perfil from './screens/Perfil/Perfil';
-import EditarPerfil from './screens/EditarPerfil/EditarPerfil';
 import Home from './screens/Home/Home';
 import Login from './screens/Login/Login';
 import Registro from './screens/Registro/Registro';
 import { PerfilProvider } from './context/PerfilContext';
+import PerfilStack from './stacks/PerfilStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -21,10 +20,8 @@ export default function App() {
       <PerfilProvider>
         <NavigationContainer>
           <Drawer.Navigator>
-            <Drawer.Screen name="Perfil" component={Perfil} />
-            <Drawer.Screen name="EditarPerfil" component={EditarPerfil} />
+            <Drawer.Screen name="PerfilStack" component={PerfilStack} options={{ title: 'Perfil' }} />
             <Drawer.Screen name="Carrito" component={Carrito} />
-            <Drawer.Screen name="Compras" component={Compras} />
             <Drawer.Screen name="Productos" component={Home} />
             <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Registro" component={Registro} />

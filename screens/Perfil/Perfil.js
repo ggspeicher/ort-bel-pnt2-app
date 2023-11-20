@@ -7,6 +7,7 @@ import Configuracion from '../../components/Configuracion/Configuracion';
 import ExpandedContext from '../../context/ExpandedContext';
 import { useState } from 'react';
 import { usePerfil } from '../../context/PerfilContext';
+import InfoCompras from '../../components/InfoCompras/InfoCompras';
 
 export default () => {
 
@@ -46,6 +47,7 @@ export default () => {
                     }}
                 >
                     <InformacionPersonal {...perfil} />
+                    <InfoCompras />
                     <Soporte />
                     <Configuracion />
                 </ExpandedContext.Provider>

@@ -16,7 +16,7 @@ export default () => {
     }
 
     const navigation = useNavigation();
-
+    
     const abrirEditarPerfil = () => {
         navigation.navigate('EditarPerfil')
     };
