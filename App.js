@@ -9,7 +9,6 @@ import Home from './screens/Home/Home';
 import Perfil from './screens/Perfil/Perfil';
 import EditarPerfil from './screens/EditarPerfil/EditarPerfil';
 import DetalleProducto from './screens/DetalleProducto/DetalleProducto';
-import { PerfilProvider } from './context/PerfilContext';
 import Login from './screens/Login/Login';
 import Registro from './screens/Registro/Registro';
 import { PerfilProvider } from './context/PerfilContext';
