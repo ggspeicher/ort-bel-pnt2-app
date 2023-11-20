@@ -7,11 +7,14 @@ import Configuracion from '../../components/Configuracion/Configuracion';
 import { ExpandedProvider } from '../../context/ExpandedContext';
 import { usePerfil } from '../../context/PerfilContext';
 import InfoCompras from '../../components/InfoCompras/InfoCompras';
+import { auth } from '../../services/config';
 
 export default () => {
 
     const { perfil } = usePerfil()
     const { nombre, imgPerfil } = perfil
+
+    console.log(auth)
 
     return (
         <SafeAreaView>

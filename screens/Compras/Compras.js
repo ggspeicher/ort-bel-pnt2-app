@@ -13,7 +13,7 @@ export default () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        {true ? (
+        {compras > 0 ? (
           <>
             <CompraItems compras={compras} />
           </>
