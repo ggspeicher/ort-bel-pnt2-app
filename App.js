@@ -14,6 +14,7 @@ import Registro from './screens/Registro/Registro';
 import { PerfilProvider } from './context/PerfilContext';
 import { CarritoProvider } from './context/CarritoContext';
 import PerfilStack from './stacks/PerfilStack';
+import LoginStack from './stacks/LoginStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -26,18 +27,11 @@ export default function App() {
           <NavigationContainer>
             <Drawer.Navigator>
               <Drawer.Screen name="Productos" component={Home} />
-              <Drawer.Screen
-                name="DetalleProducto"
-                component={DetalleProducto}
-              />
-              <Drawer.Screen
-                name="PerfilStack"
-                component={PerfilStack}
-                options={{ title: 'Perfil' }}
-              />
+              <Drawer.Screen name="DetalleProducto" component={DetalleProducto} />
+              <Drawer.Screen name="LoginStack" component={LoginStack} options={{ title: 'Login' }} />
+
+              <Drawer.Screen name="PerfilStack" component={PerfilStack} options={{ title: 'Perfil' }} />
               <Drawer.Screen name="Carrito" component={Carrito} />
-              <Drawer.Screen name="Login" component={Login} />
-              <Drawer.Screen name="Registro" component={Registro} />
             </Drawer.Navigator>
           </NavigationContainer>
         </CarritoProvider>
