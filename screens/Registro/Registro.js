@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import {View, Text, TextInput, TouchableOpacity, StyleSheet,Alert} from 'react-native';
-
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-
 import { app, db } from '../../services/config';
 import { useNavigation } from '@react-navigation/native';
 import { addDoc, collection } from 'firebase/firestore';
