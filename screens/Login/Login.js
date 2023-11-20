@@ -1,22 +1,7 @@
 import { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from 'react-native';
-
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  initializeAuth,
-  getReactNativePersistence,
-} from 'firebase/auth';
-import { app, auth } from '../../services/config';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert} from 'react-native';
+import { signInWithEmailAndPassword} from 'firebase/auth';
+import { auth } from '../../services/config';
 import { useNavigation } from '@react-navigation/native';
 
 export default () => {
