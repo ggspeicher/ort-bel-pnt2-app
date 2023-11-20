@@ -11,6 +11,7 @@ import EditarPerfil from './screens/EditarPerfil/EditarPerfil';
 import DetalleProducto from './screens/DetalleProducto/DetalleProducto';
 import Login from './screens/Login/Login';
 import Registro from './screens/Registro/Registro';
+import { PerfilProvider } from './context/PerfilContext';
 import { CarritoProvider } from './context/CarritoContext';
 import PerfilStack from './stacks/PerfilStack';
 
