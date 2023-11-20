@@ -12,6 +12,9 @@ import DetalleProducto from './screens/DetalleProducto/DetalleProducto';
 import { PerfilProvider } from './context/PerfilContext';
 import Login from './screens/Login/Login';
 import Registro from './screens/Registro/Registro';
+import { PerfilProvider } from './context/PerfilContext';
+import { CarritoProvider } from './context/CarritoContext';
+import PerfilStack from './stacks/PerfilStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -20,18 +23,18 @@ export default function App() {
     <>
       <StatusBar style="auto" />
       <PerfilProvider>
-        <NavigationContainer>
-          <Drawer.Navigator>
-            <Drawer.Screen name="EditarPerfil" component={EditarPerfil} />
-            <Drawer.Screen name="Carrito" component={Carrito} />
-            <Drawer.Screen name="Perfil" component={Perfil} />
-            <Drawer.Screen name="Productos" component={Home} />
-            <Drawer.Screen name="Compras" component={Compras} />
-            <Drawer.Screen name="Login" component={Login} />
-            <Drawer.Screen name="Registro" component={Registro} />
-            <Drawer.Screen name="DetalleProducto" component={DetalleProducto}/>
-          </Drawer.Navigator>
-        </NavigationContainer>
+        <CarritoProvider>
+          <NavigationContainer>
+            <Drawer.Navigator>
+              <Drawer.Screen name="PerfilStack" component={PerfilStack} options={{ title: 'Perfil' }} />
+              <Drawer.Screen name="Carrito" component={Carrito} />
+              <Drawer.Screen name="Productos" component={Home} />
+              <Drawer.Screen name="Login" component={Login} />
+              <Drawer.Screen name="Registro" component={Registro} />
+               <Drawer.Screen name="DetalleProducto" component={DetalleProducto}/>
+            </Drawer.Navigator>
+          </NavigationContainer>
+        </CarritoProvider>
       </PerfilProvider>
     </>
   );

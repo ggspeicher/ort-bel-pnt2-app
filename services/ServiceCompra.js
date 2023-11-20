@@ -1,4 +1,4 @@
-import { getDocs, collection, query, where } from 'firebase/firestore';
+import { getDocs, collection, query, where, doc, updateDoc, arrayUnion } from 'firebase/firestore';
 // getDocs me permite obtener los documentos de una coleccion.
 // collection me permite obtener una coleccion.
 // query la uso cuando quiero generar una consulta.
@@ -7,24 +7,23 @@ import { getDocs, collection, query, where } from 'firebase/firestore';
 // ahora me traigo mi referencia de la base de datos
 import { db } from '../services/config';
 
-class ServicioCompras {
-  static async obtenerComprasPorUsuario(userId) {
+class ServicioCompra {
+
+  static async agregarCompra(userId, nuevaCompra) {
     const q = query(collection(db, 'usuarios'), where('id', '==', userId));
 
     try {
       const resultadoQuery = await getDocs(q);
 
       if (!resultadoQuery.empty) {
-        const { compras } = resultadoQuery.docs[0].data();
-        return compras;
-      } else {
-        return [];
+        const perfilRef = doc(db, 'usuarios', resultadoQuery.docs[0].id);
+        await updateDoc(perfilRef, { compras: arrayUnion(nuevaCompra) });
       }
     } catch (err) {
-      console.error('Error al obtener las compras: ', err);
-      throw err;
+      console.error('Error al actualizar el perfil: ', err);
     }
   }
+
 }
 
-export default ServicioCompras;
+export default ServicioCompra;

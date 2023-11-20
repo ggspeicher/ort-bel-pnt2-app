@@ -1,60 +1,107 @@
-import { Input } from 'react-native-elements';
 import { useEffect, useState } from 'react';
-import { TextInput } from 'react-native-gesture-handler';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import InputDefault from '../../components/InputDefault/InputDefault';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import ServicioPerfil from '../../services/ServicioPerfil';
 import { usePerfil } from '../../context/PerfilContext';
+import { useNavigation } from '@react-navigation/core';
+import TextoError from '../../components/TextoError/TextoError';
+import ContentBox from '../../components/ContentBox/ContentBox';
 
 
 export default () => {
 
-    const { perfil, actualizarPerfil } = usePerfil()
-    
-    const { telefono, direccion } = perfil
-    // telefono es luego convertido a string xq en placeholder no se puede nums y tira error
-    
-    const [tel, setTel] = useState()
-    const [dir, setDirec] = useState()
+    const navigation = useNavigation();
+
+    const { perfil, obtenerYActualizarPerfil } = usePerfil()
+    const { id, telefono, direccion } = perfil
+
+    const [tel, setTel] = useState(null)
+    const [dir, setDirec] = useState(null)
+
+    // validaciones de la actualizacion de perfil
+    const [telErr, setTelErr] = useState(false)
+    const [dirErr, setDitErr] = useState(false)
 
     const validarInfo = () => {
-        return tel && dir;
+        if (tel && dir) {
+            return true
+        } else {
+            if (!tel) {
+                setTelErr(true);
+            }
+            if (!dir) {
+                setDitErr(true);
+            }
+            return false;
+        }
     }
 
-    const actualizar = () => {
-        if(validarInfo) {
+    const setErrors = (bol) => {
+        setTelErr(bol);
+        setDitErr(bol);
+    }
+
+    const actualizar = async () => {
+        if (validarInfo()) {
             const obj = {
                 ...perfil,
                 telefono: tel,
                 direccion: dir
             }
-            actualizarPerfil(obj);
+            await ServicioPerfil.actualizarPerfil(id, obj);
+            await obtenerYActualizarPerfil(id)
+            restablecer()
+            perfilExitoso()
         }
     }
 
+    const restablecer = () => {
+        setTel('')
+        setDirec('')
+        setErrors(false)
+    }
+
+    const perfilExitoso = () => {
+        Alert.alert(
+            'Perfil actualizado',
+            '¡Tu perfil se ha actualizado correctamente!',
+            [
+                {
+                    text: 'Ir a perfil',
+                    onPress: () => { navigation.navigate('Perfil') }
+                }
+            ]
+        );
+    }
 
     return (
         <View style={styles.container}>
-            <View>
-                <View style={styles.content}>
-                    <Icon name='phone' size={20} color="black" />
-                    <Text>Telefono</Text>
+            <ContentBox>
+                <View style={styles.editBox}>
+                    <View>
+                        <View style={styles.content}>
+                            <Icon name='phone' size={20} color="black" />
+                            <Text>Teléfono</Text>
+                        </View>
+                        <InputDefault ph={telefono} value={tel} set={setTel} kbType={'number-pad'} setErrors={setErrors}></InputDefault>
+                        {telErr && <TextoError>Teléfono incorrecto</TextoError>}
+                    </View>
+                    <View>
+                        <View style={styles.content}>
+                            <Icon name='calendar' size={20} color="black" />
+                            <Text>Dirección</Text>
+                        </View>
+                        <InputDefault ph={direccion} value={dir} set={setDirec} kbType={'default'} setErrors={setErrors}></InputDefault>
+                        {dirErr && <TextoError>Dirección incorrecto</TextoError>}
+                    </View>
+                    <View style={styles.containerBoton}>
+                        <CustomButton style={styles.boton} text={'Confirmar edición'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={actualizar} />
+                        <CustomButton style={styles.boton} text={'Restablecer'} color={'#c31f2d'} width={'auto'} height={'auto'} onPress={restablecer} />
+                    </View>
                 </View>
-                <InputDefault ph={String(telefono)} value={tel} set={setTel}></InputDefault>
-            </View>
-            <View>
-                <View style={styles.content}>
-                    <Icon name='calendar' size={20} color="black" />
-                    <Text>Dirección</Text>
-                </View>
-                <InputDefault ph={direccion} value={dir} set={setDirec}></InputDefault>
-            </View>
-            <View style={styles.containerBoton}>
-                <CustomButton style={styles.boton} text={'Confirmar edición'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={actualizar} />
-                <CustomButton style={styles.boton} text={'Restablecer'} color={'#c31f2d'} width={'auto'} height={'auto'} />
-            </View>
+            </ContentBox>
         </View>
     )
 }
@@ -62,11 +109,12 @@ export default () => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 16,
-        backgroundColor: 'white',
+        padding: 10
+    },
+    editBox: {
         display: 'flex',
         flexDirection: 'column',
-        gap: 16
+        gap: 10,
     },
     content: {
         display: 'flex',
@@ -78,7 +126,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         gap: 5,
-        marginTop: 10,
     },
     boton: {
         flex: 1

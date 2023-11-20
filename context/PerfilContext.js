@@ -1,4 +1,3 @@
-// En un nuevo archivo, por ejemplo, PerfilContext.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import ServicioPerfil from '../services/ServicioPerfil';
 
@@ -6,35 +5,29 @@ const PerfilContext = createContext();
 
 export const PerfilProvider = ({ children }) => {
 
-    const [perfil, setPerfil] = useState({})
+  // estado global de mi perfil o usuario
+  const [perfil, setPerfil] = useState({});
 
-    useEffect(() => {
-        const obtenerPerfil = async () => {
-            try {
-                setPerfil(await ServicioPerfil.obtenerPerfilPorUsuario("1"));
-            } catch (err) {
-                console.error(err)
-            }
-        };
-        obtenerPerfil();
-    }, [perfil])
+  // cargo y obtengo mi usuario
+  useEffect(() => {
+    const userId = "1";
+    obtenerYActualizarPerfil(userId);
+  }, []); 
 
-  const actualizarPerfil = (nuevoPerfil) => {
-    setPerfil(nuevoPerfil);
-    console.log(perfil.telefono)
+  // este metodo se usa y se usara en los lugares donde se actualice el usuario en cuestion
+  // ya que al actualizar firebase necesitamos volver a obtener los datos porque si no estariamos con informacion vieja
+  const obtenerYActualizarPerfil = async (userId) => {
+    const perfilObtenido = await ServicioPerfil.obtenerPerfil(userId);
+    setPerfil(perfilObtenido);
   };
 
+
   return (
-    <PerfilContext.Provider value={{ perfil, actualizarPerfil }}>
+    // paso el estado perfil y el metodo responsable de actualizar los cambios en la app
+    <PerfilContext.Provider value={{ perfil, obtenerYActualizarPerfil }}>
       {children}
     </PerfilContext.Provider>
   );
 };
 
-export const usePerfil = () => {
-  const context = useContext(PerfilContext);
-  if (!context) {
-    throw new Error('usePerfil debe ser usado dentro de un PerfilProvider');
-  }
-  return context;
-};
+export const usePerfil = () => useContext(PerfilContext);

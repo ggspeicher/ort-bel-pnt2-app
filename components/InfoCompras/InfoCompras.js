@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import AccordionContent from '../AccordionContent/AccordionContent';
 import { StyleSheet, TouchableOpacity, Linking  } from 'react-native';
 import ExpandedContext, { useExpanded } from '../../context/ExpandedContext.js';
+import { useNavigation } from '@react-navigation/core';
 
 export default () => {
 
@@ -10,34 +11,32 @@ export default () => {
 
     const open = {
         InformacionPersonal: false,
-        InfoCompras: false,
+        InfoCompras: true,
         Configuracion: false,
-        Soporte: true
+        Soporte: false
     }
 
-
-    const soporteContacto = '1168247438';
-
-    const abrirWhatsApp = () => {
-        const whatsappUrl = `https://wa.me/${soporteContacto}`;
-        Linking.openURL(whatsappUrl).catch(() => console.log('Error al abrir WhatsApp'));
+    const navigation = useNavigation()
+    
+    const abrirCompras = () => {
+        navigation.navigate('Compras')
     };
 
     return (
         <ListItem.Accordion
             content={
-                <AccordionContent principalIcon={"headphones"} principalText={"Soporte"} />
+                <AccordionContent principalIcon={"shopping-bag"} principalText={"Mis compras"} />
             }
             onPress={() => setExpandedSections(open)}
-            isExpanded={expandedSections.Soporte}
+            isExpanded={expandedSections.InfoCompras}
         >
             <TouchableOpacity
-                onPress={abrirWhatsApp}
+                onPress={abrirCompras}
             >
                 <ListItem>
                     <ListItem.Content>
-                        <ListItem.Title style={styles.title}>CONTACTAR SOPORTE</ListItem.Title>
-                        <ListItem.Subtitle style={styles.subtitle}>Comunícate con el equipo de asistencia.</ListItem.Subtitle>
+                        <ListItem.Title style={styles.title}>MIS COMPRAS</ListItem.Title>
+                        <ListItem.Subtitle style={styles.subtitle}>Visualiza todas tus compras.</ListItem.Subtitle>
                     </ListItem.Content>
                     <ListItem.Chevron />
                 </ListItem>
