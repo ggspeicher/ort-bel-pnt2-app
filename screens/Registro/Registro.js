@@ -30,6 +30,10 @@ export default Registro = () => {
     }
   };
 
+  const returnToLogin = () => {
+    navigation.navigate('Login');
+  };
+
   const handleCreateAccount = async () => {
     try {
       // Crear cuenta en Authentication
@@ -109,8 +113,15 @@ export default Registro = () => {
           }
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
+
+      <TouchableOpacity
+        style={styles.buttonGreen}
+        onPress={handleCreateAccount}
+      >
         <Text style={styles.buttonText}>Registrarse</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.buttonBlue} onPress={returnToLogin}>
+        <Text style={styles.buttonText}>Ya tengo una cuenta</Text>
       </TouchableOpacity>
     </View>
   );
@@ -140,10 +151,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 10,
   },
-  button: {
+  buttonGreen: {
     backgroundColor: 'green',
     padding: 10,
     borderRadius: 5,
+    marginBottom: 16,
+  },
+  buttonBlue: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 16,
   },
   buttonText: {
     color: 'white',
