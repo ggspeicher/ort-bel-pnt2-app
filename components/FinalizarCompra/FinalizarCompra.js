@@ -3,19 +3,21 @@ import Icon from 'react-native-vector-icons/Feather';
 import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import CustomButton from "../CustomButton/CustomButton";
 import { useEffect, useState } from "react";
-import { db } from '../../services/config'
-import { getDocs, getDoc, collection, query, where, addDoc, doc, updateDoc } from 'firebase/firestore'
-import { async } from "@firebase/util";
-import { arrayUnion } from 'firebase/firestore';
-import ServicioCompras from "../../services/ServicioCompras";
+import ServicioCompra from "../../services/ServiceCompra";
+import { usePerfil } from "../../context/PerfilContext";
+import { useNavigation } from "@react-navigation/core";
+import Compras from '../../screens/Compras/Compras';
 
 export default ({ carrito, setCarrito }) => {
 
+    const navigation = useNavigation();
+
+    const { perfil, obtenerYActualizarPerfil } = usePerfil()
+    const { id } = perfil
+
     const [tarifaEnvio, setTarifaEnvio] = useState(330)
     const [tarifaServicio, setTarifaServicio] = useState(200)
-
     const [total, setTotal] = useState(0);
-
     const [subtotal, setSubtotal] = useState(0);
 
     useEffect(() => {
@@ -30,6 +32,37 @@ export default ({ carrito, setCarrito }) => {
     useEffect(() => {
         setSubtotal(tarifaEnvio + tarifaServicio + total)
     }, [total])
+
+    const comprar = () => {
+        Alert.alert(
+            'Realizar compra',
+            'Al confirmar se procesará la compra',
+            [
+                {
+                    text: 'Volver',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Confirmar',
+                    onPress: procesoCompra,
+                    style: 'cancel',
+                }
+            ]
+        );
+    }
+
+    const compraExitosa = () => {
+        Alert.alert(
+            'Compra exitosa',
+            '¡La compra se ha realizado correctamente!',
+            [
+                {
+                    text: 'Ver compras',
+                    onPress: () => { navigation.navigate('Compras') }
+                }
+            ]
+        );
+    }
 
     const procesoCompra = async () => {
 
@@ -51,9 +84,10 @@ export default ({ carrito, setCarrito }) => {
             total: total
         };
 
-        await ServicioCompras.agregarCompra("1", compra)
-        console.log('ac1');
-
+        await ServicioCompra.agregarCompra(id, compra)
+        await obtenerYActualizarPerfil(id)
+        compraExitosa()
+        // logica para limpiar carrito TO-DO
     }
 
     return (
@@ -82,7 +116,7 @@ export default ({ carrito, setCarrito }) => {
                     <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>$ {subtotal}</Text>
                 </View>
                 <View style={styles.containerBoton}>
-                    <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={procesoCompra} />
+                    <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={comprar} />
                     <CustomButton style={styles.boton} text={'Vaciar carrito'} color={'#c31f2d'} width={'auto'} height={'auto'} onPress={() => setCarrito([])} />
                 </View>
             </View>

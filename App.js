@@ -10,6 +10,7 @@ import EditarPerfil from './screens/EditarPerfil/EditarPerfil';
 import Home from './screens/Home/Home';
 import Login from './screens/Login/Login';
 import Registro from './screens/Registro/Registro';
+import { PerfilProvider } from './context/PerfilContext';
 
 const Drawer = createDrawerNavigator();
 
@@ -17,10 +18,11 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
+      <PerfilProvider>
         <NavigationContainer>
           <Drawer.Navigator>
-            <Drawer.Screen name="EditarPerfil" component={EditarPerfil} />
             <Drawer.Screen name="Perfil" component={Perfil} />
+            <Drawer.Screen name="EditarPerfil" component={EditarPerfil} />
             <Drawer.Screen name="Carrito" component={Carrito} />
             <Drawer.Screen name="Compras" component={Compras} />
             <Drawer.Screen name="Productos" component={Home} />
@@ -28,6 +30,7 @@ export default function App() {
             <Drawer.Screen name="Registro" component={Registro} />
           </Drawer.Navigator>
         </NavigationContainer>
+      </PerfilProvider>
     </>
   );
 }

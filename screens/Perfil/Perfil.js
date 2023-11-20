@@ -7,6 +7,7 @@ import Configuracion from '../../components/Configuracion/Configuracion';
 import ExpandedContext from '../../context/ExpandedContext';
 import { useEffect, useState } from 'react';
 import ServicioPerfil from '../../services/ServicioPerfil';
+import { usePerfil } from '../../context/PerfilContext';
 
 export default () => {
 
@@ -14,15 +15,7 @@ export default () => {
     const [expandedConfiguracion, setExpandedConfiguracion] = useState(false);
     const [expandedSoporte, setExpandedSoporte] = useState(false);
 
-    const [perfil, setPerfil] = useState({})
-
-    useEffect(() => {
-        const obtenerDatos = async () => {
-            setPerfil(await ServicioPerfil.obtenerPerfil("1"));
-        };
-        obtenerDatos();
-    }, []);
-
+    const { perfil } = usePerfil()
     const { nombre, imgPerfil } = perfil
 
     return (

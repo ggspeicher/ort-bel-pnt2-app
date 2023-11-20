@@ -5,12 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default ( { texto } ) => {
 
-    // por ahora lo redirijo a su perfil, pero cuando este home lo redirijo a home
     const navigation = useNavigation();
-
-    const irAHome = () => {
-      navigation.navigate('Perfil');
-    };
 
     return (
         <View style={styles.container}>
@@ -24,7 +19,7 @@ export default ( { texto } ) => {
                     color={'#123d5c'}
                     width={'100%'}
                     height={'auto'}
-                    onPress={irAHome}
+                    onPress={navigation.navigate('Home')}
                 />
             </View>
         </View>

@@ -7,25 +7,9 @@ import { getDocs, collection, query, where, doc, updateDoc, arrayUnion } from 'f
 // ahora me traigo mi referencia de la base de datos
 import { db } from '../services/config';
 
-class ServicioPerfil {
+class ServicioCompra {
 
-  static async obtenerPerfil(userId) {
-    const q = query(collection(db, 'usuarios'), where('id', '==', userId));
-
-    try {
-      const resultadoQuery = await getDocs(q);
-
-      if (!resultadoQuery.empty) {
-        const perfil = resultadoQuery.docs[0].data();
-        return perfil;
-      }
-
-    } catch (err) {
-      console.error('Error al obtener el perfil: ', err);
-    }
-  }
-
-  static async actualizarPerfil(userId, nuevoPerfil) {
+  static async agregarCompra(userId, nuevaCompra) {
     const q = query(collection(db, 'usuarios'), where('id', '==', userId));
 
     try {
@@ -33,7 +17,7 @@ class ServicioPerfil {
 
       if (!resultadoQuery.empty) {
         const perfilRef = doc(db, 'usuarios', resultadoQuery.docs[0].id);
-        await updateDoc(perfilRef, nuevoPerfil);
+        await updateDoc(perfilRef, { compras: arrayUnion(nuevaCompra) });
       }
     } catch (err) {
       console.error('Error al actualizar el perfil: ', err);
@@ -42,4 +26,4 @@ class ServicioPerfil {
 
 }
 
-export default ServicioPerfil;
+export default ServicioCompra;

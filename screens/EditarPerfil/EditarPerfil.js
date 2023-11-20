@@ -4,22 +4,13 @@ import Icon from 'react-native-vector-icons/Feather';
 import InputDefault from '../../components/InputDefault/InputDefault';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import ServicioPerfil from '../../services/ServicioPerfil';
-import { addDoc, collection } from '@firebase/firestore';
-import { db } from '../../services/config';
+import { usePerfil } from '../../context/PerfilContext';
 
 
 export default () => {
 
-    const [perfil, setPerfil] = useState({})
-
-    useEffect(() => {
-        const obtenerDatos = async () => {
-            setPerfil(await ServicioPerfil.obtenerPerfil("1"));
-        };
-        obtenerDatos();
-    }, []);
-
-    const { telefono, direccion } = perfil
+    const { perfil, obtenerYActualizarPerfil } = usePerfil()
+    const { id, telefono, direccion } = perfil
     
     const [tel, setTel] = useState()
     const [dir, setDirec] = useState()
@@ -39,9 +30,9 @@ export default () => {
                 telefono: tel,
                 direccion: dir
             }
-            await ServicioPerfil.actualizarPerfil("1", obj);
+            await ServicioPerfil.actualizarPerfil(id, obj);
+            await obtenerYActualizarPerfil(id)
             restablecer()
-            await ServicioPerfil.obtenerPerfil("1", true);
         }
     }
 
