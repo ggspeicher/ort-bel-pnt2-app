@@ -9,7 +9,6 @@ import Home from './screens/Home/Home';
 import Perfil from './screens/Perfil/Perfil';
 import EditarPerfil from './screens/EditarPerfil/EditarPerfil';
 import DetalleProducto from './screens/DetalleProducto/DetalleProducto';
-import { PerfilProvider } from './context/PerfilContext';
 import Login from './screens/Login/Login';
 import Registro from './screens/Registro/Registro';
 import { CarritoProvider } from './context/CarritoContext';
@@ -25,19 +24,19 @@ export default function App() {
         <CarritoProvider>
           <NavigationContainer>
             <Drawer.Navigator>
+              <Drawer.Screen name="Productos" component={Home} />
+              <Drawer.Screen
+                name="DetalleProducto"
+                component={DetalleProducto}
+              />
               <Drawer.Screen
                 name="PerfilStack"
                 component={PerfilStack}
                 options={{ title: 'Perfil' }}
               />
               <Drawer.Screen name="Carrito" component={Carrito} />
-              <Drawer.Screen name="Productos" component={Home} />
               <Drawer.Screen name="Login" component={Login} />
               <Drawer.Screen name="Registro" component={Registro} />
-              <Drawer.Screen
-                name="DetalleProducto"
-                component={DetalleProducto}
-              />
             </Drawer.Navigator>
           </NavigationContainer>
         </CarritoProvider>

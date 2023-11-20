@@ -7,6 +7,8 @@ export default function DetalleProducto({ route }) {
   const navigation = useNavigation();
 
   const agregarAlCarrito = () => {
+    // ** Validar si hay usuario logeado si lo hay, agrega y si no al login **
+
     // Lógica para agregar el producto al carrito
     console.log(`Producto ${producto.nombre} agregado al carrito.`);
     navigation.navigate('Productos');
