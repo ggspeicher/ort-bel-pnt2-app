@@ -3,8 +3,9 @@ import moment from 'moment/moment'
 import Icon from 'react-native-vector-icons/Feather';
 import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import SubItemCompra from "../SubItemCompra/SubItemCompra";
+import Badge from "../Badge/Badge";
 
-export default ({ compra }) => {
+export default ({ compra, ultimaCompra }) => {
 
     const { detalles, fecha, total } = compra
 
@@ -14,10 +15,15 @@ export default ({ compra }) => {
 
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, styles.shadowProp]}>
             <View style={styles.content}>
-                <Icon name='calendar' size={20} color="black" />
-                <Text>{dia} a las {hora}hs</Text>
+                <View style={styles.content}>
+                    <Icon name='calendar' size={20} color="black" />
+                    <Text>{dia} a las {hora}hs</Text>
+                </View>
+                {ultimaCompra && (
+                    <Badge title={'MÁS RECIENTE'} bgColor={'#008f39'}></Badge>
+                )}
             </View>
             <LineaDivisoria></LineaDivisoria>
             <View style={styles.contentProducts}>
@@ -49,7 +55,15 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         gap: 5,
         padding: 16,
-        marginBottom: 8,
+        marginBottom: 10,
+        rounded: 1,
+        borderRadius: 10,
+    },
+    shadowProp: {
+        shadowColor: '#171717',
+        shadowOffset: { width: -2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
     },
     content: {
         display: 'flex',
@@ -78,5 +92,5 @@ const styles = StyleSheet.create({
     subtotalBox: {
         display: 'flex',
         flexDirection: 'row'
-    },
+    }
 });

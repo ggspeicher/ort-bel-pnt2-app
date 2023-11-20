@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import PantallaVacia from '../../components/PantallaVacia/PantallaVacia';
 import CompraItems from '../../components/CompraItems/CompraItems';
 import { usePerfil } from '../../context/PerfilContext';
+import { View, StyleSheet } from 'react-native';
 
 export default () => {
 
@@ -11,13 +12,21 @@ export default () => {
 
   return (
     <ScrollView>
-      {true ? (
-        <>
-          <CompraItems compras={compras} />
-        </>
-      ) : (
-        <PantallaVacia texto={'¡No tienes compras actualmente!'} />
-      )}
+      <View style={styles.container}>
+        {true ? (
+          <>
+            <CompraItems compras={compras} />
+          </>
+        ) : (
+          <PantallaVacia texto={'¡No tienes compras actualmente!'} />
+        )}
+      </View>
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10
+  }
+});

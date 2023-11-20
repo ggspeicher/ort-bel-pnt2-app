@@ -2,17 +2,19 @@ import { ListItem } from '@rneui/themed';
 import { useContext } from 'react';
 import AccordionContent from '../AccordionContent/AccordionContent';
 import { StyleSheet, TouchableOpacity, Linking  } from 'react-native';
-import ExpandedContext from '../../context/ExpandedContext.js';
+import ExpandedContext, { useExpanded } from '../../context/ExpandedContext.js';
 
 export default () => {
 
-    const { expandedSoporte, setExpandedIP, setExpandedConfiguracion, setExpandedSoporte } = useContext(ExpandedContext);
+    const { expandedSections, setExpandedSections } = useExpanded();
 
-    const handlerPress = () => {
-        setExpandedIP(false)
-        setExpandedConfiguracion(false)
-        setExpandedSoporte(!expandedSoporte)
+    const open = {
+        InformacionPersonal: false,
+        InfoCompras: false,
+        Configuracion: false,
+        Soporte: true
     }
+
 
     const soporteContacto = '1168247438';
 
@@ -26,8 +28,8 @@ export default () => {
             content={
                 <AccordionContent principalIcon={"headphones"} principalText={"Soporte"} />
             }
-            onPress={handlerPress}
-            isExpanded={expandedSoporte}
+            onPress={() => setExpandedSections(open)}
+            isExpanded={expandedSections.Soporte}
         >
             <TouchableOpacity
                 onPress={abrirWhatsApp}

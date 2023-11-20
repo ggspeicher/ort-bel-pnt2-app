@@ -2,21 +2,22 @@ import { ListItem } from '@rneui/themed';
 import { useContext } from 'react';
 import AccordionContent from '../AccordionContent/AccordionContent';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import ExpandedContext from '../../context/ExpandedContext.js';
+import ExpandedContext, { useExpanded } from '../../context/ExpandedContext.js';
 import { useNavigation } from '@react-navigation/native';
 
 export default () => {
 
-    const { expandedConfiguracion, setExpandedIP, setExpandedConfiguracion, setExpandedSoporte } = useContext(ExpandedContext);
-
-    const handlerPress = () => {
-        setExpandedIP(false)
-        setExpandedConfiguracion(!expandedConfiguracion)
-        setExpandedSoporte(false)
-    }
+    const { expandedSections, setExpandedSections } = useExpanded();
 
     const navigation = useNavigation();
-    
+
+    const open = {
+        InformacionPersonal: false,
+        InfoCompras: false,
+        Configuracion: true,
+        Soporte: false
+    }
+
     const abrirEditarPerfil = () => {
         navigation.navigate('EditarPerfil')
     };
@@ -26,8 +27,8 @@ export default () => {
             content={
                 <AccordionContent principalIcon={"tool"} principalText={"Configuración"} />
             }
-            onPress={handlerPress}
-            isExpanded={expandedConfiguracion}
+            onPress={() => setExpandedSections(open)}
+            isExpanded={expandedSections.Configuracion}
         >
             <TouchableOpacity
                 onPress={abrirEditarPerfil}

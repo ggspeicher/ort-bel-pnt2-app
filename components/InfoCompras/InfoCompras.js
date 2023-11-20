@@ -2,17 +2,18 @@ import { ListItem } from '@rneui/themed';
 import { useContext } from 'react';
 import AccordionContent from '../AccordionContent/AccordionContent';
 import { StyleSheet, TouchableOpacity, Linking  } from 'react-native';
-import ExpandedContext from '../../context/ExpandedContext.js';
+import ExpandedContext, { useExpanded } from '../../context/ExpandedContext.js';
 import { useNavigation } from '@react-navigation/core';
 
 export default () => {
 
-    const { expandedSoporte, setExpandedIP, setExpandedConfiguracion, setExpandedSoporte } = useContext(ExpandedContext);
+    const { expandedSections, setExpandedSections } = useExpanded();
 
-    const handlerPress = () => {
-        setExpandedIP(false)
-        setExpandedConfiguracion(false)
-        setExpandedSoporte(!expandedSoporte)
+    const open = {
+        InformacionPersonal: false,
+        InfoCompras: true,
+        Configuracion: false,
+        Soporte: false
     }
 
     const navigation = useNavigation()
@@ -26,8 +27,8 @@ export default () => {
             content={
                 <AccordionContent principalIcon={"shopping-bag"} principalText={"Mis compras"} />
             }
-            onPress={handlerPress}
-            isExpanded={expandedSoporte}
+            onPress={() => setExpandedSections(open)}
+            isExpanded={expandedSections.InfoCompras}
         >
             <TouchableOpacity
                 onPress={abrirCompras}
