@@ -6,6 +6,7 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { app, db } from '../../services/config';
 import { useNavigation } from '@react-navigation/native';
 import { addDoc, collection } from 'firebase/firestore';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default Registro = () => {
   const auth = getAuth(app);
@@ -16,6 +17,13 @@ export default Registro = () => {
   const [password, setPassword] = useState('');
   const [direccion, setDireccion] = useState('');
   const [telefono, setTelefono] = useState('');
+  const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
+
+  const handleDateChange = (event, selectedDate) => {
+    if (selectedDate) {
+      setFechaNacimiento(selectedDate);
+    }
+  };
 
   const handleCreateAccount = async () => {
     try {
@@ -37,6 +45,7 @@ export default Registro = () => {
         telefono: telefono,
         direccion: direccion,
         id: userId,
+        fechaNacimiento: fechaNacimiento,
         compras: [],
         imgPerfil: '',
       });
@@ -83,6 +92,18 @@ export default Registro = () => {
         value={telefono}
         onChangeText={(number) => setTelefono(number)}
       />
+      <View style={styles.row}>
+        <Text style={styles.labelDate}>Fecha de Nacimiento:</Text>
+        <DateTimePicker
+          value={fechaNacimiento}
+          mode="date"
+          display="default"
+          onChange={handleDateChange}
+          maximumDate={
+            new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+          }
+        />
+      </View>
       <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
         <Text style={styles.buttonText}>Registrarse</Text>
       </TouchableOpacity>
@@ -96,6 +117,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   title: {
     fontSize: 24,
@@ -117,5 +143,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     textAlign: 'center',
+  },
+  labelDate: {
+    marginTop: 10,
+    marginBottom: 5,
+    marginLeft: 10,
   },
 });
