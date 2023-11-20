@@ -39,7 +39,6 @@ class ServicioPerfil {
       console.error('Error al actualizar el perfil: ', err);
     }
   }
-
 }
 
 export default ServicioPerfil;

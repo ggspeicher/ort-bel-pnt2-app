@@ -48,6 +48,5 @@ const styles = StyleSheet.create({
   },
   inputStyle: { fontSize: 16 },
   labelStyle: { fontSize: 14 },
-  placeholderStyle: { fontSize: 16 },
-  textErrorStyle: { fontSize: 16 },
+  placeholderStyle: { fontSize: 16 }
 });

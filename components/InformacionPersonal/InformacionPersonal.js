@@ -1,9 +1,8 @@
 import { ListItem } from '@rneui/themed';
 import AccordionContent from '../AccordionContent/AccordionContent';
 import { StyleSheet } from 'react-native';
-import ExpandedContext, { useExpanded } from '../../context/ExpandedContext';
-import { useContext } from 'react';
-import { View } from 'react-native-web';
+import { useExpanded } from '../../context/ExpandedContext';
+import ServicioPerfil from '../../services/ServicioPerfil';
 
 export default ({ nombre, telefono, correo, direccion }) => {
 

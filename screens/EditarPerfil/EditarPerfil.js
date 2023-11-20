@@ -7,6 +7,7 @@ import ServicioPerfil from '../../services/ServicioPerfil';
 import { usePerfil } from '../../context/PerfilContext';
 import { useNavigation } from '@react-navigation/core';
 import TextoError from '../../components/TextoError/TextoError';
+import ContentBox from '../../components/ContentBox/ContentBox';
 
 
 export default () => {
@@ -24,7 +25,7 @@ export default () => {
     const [dirErr, setDitErr] = useState(false)
 
     const validarInfo = () => {
-        if(tel && dir){
+        if (tel && dir) {
             return true
         } else {
             if (!tel) {
@@ -43,7 +44,7 @@ export default () => {
     }
 
     const actualizar = async () => {
-        if(validarInfo()) {
+        if (validarInfo()) {
             const obj = {
                 ...perfil,
                 telefono: tel,
@@ -77,26 +78,30 @@ export default () => {
 
     return (
         <View style={styles.container}>
-            <View>
-                <View style={styles.content}>
-                    <Icon name='phone' size={20} color="black" />
-                    <Text>Teléfono</Text>
+            <ContentBox>
+                <View style={styles.editBox}>
+                    <View>
+                        <View style={styles.content}>
+                            <Icon name='phone' size={20} color="black" />
+                            <Text>Teléfono</Text>
+                        </View>
+                        <InputDefault ph={telefono} value={tel} set={setTel} kbType={'number-pad'} setErrors={setErrors}></InputDefault>
+                        {telErr && <TextoError>Teléfono incorrecto</TextoError>}
+                    </View>
+                    <View>
+                        <View style={styles.content}>
+                            <Icon name='calendar' size={20} color="black" />
+                            <Text>Dirección</Text>
+                        </View>
+                        <InputDefault ph={direccion} value={dir} set={setDirec} kbType={'default'} setErrors={setErrors}></InputDefault>
+                        {dirErr && <TextoError>Dirección incorrecto</TextoError>}
+                    </View>
+                    <View style={styles.containerBoton}>
+                        <CustomButton style={styles.boton} text={'Confirmar edición'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={actualizar} />
+                        <CustomButton style={styles.boton} text={'Restablecer'} color={'#c31f2d'} width={'auto'} height={'auto'} onPress={restablecer} />
+                    </View>
                 </View>
-                <InputDefault ph={telefono} value={tel} set={setTel} kbType={'number-pad'} setErrors={setErrors}></InputDefault>
-                {telErr && <TextoError>Teléfono incorrecto</TextoError>}
-            </View>
-            <View>
-                <View style={styles.content}>
-                    <Icon name='calendar' size={20} color="black" />
-                    <Text>Dirección</Text>
-                </View>
-                <InputDefault ph={direccion} value={dir} set={setDirec} kbType={'default'} setErrors={setErrors}></InputDefault>
-                {dirErr && <TextoError>Dirección incorrecto</TextoError>}
-            </View>
-            <View style={styles.containerBoton}>
-                <CustomButton style={styles.boton} text={'Confirmar edición'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={actualizar} />
-                <CustomButton style={styles.boton} text={'Restablecer'} color={'#c31f2d'} width={'auto'} height={'auto'} onPress={restablecer} />
-            </View>
+            </ContentBox>
         </View>
     )
 }
@@ -104,11 +109,12 @@ export default () => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 16,
-        backgroundColor: 'white',
+        padding: 10
+    },
+    editBox: {
         display: 'flex',
         flexDirection: 'column',
-        gap: 16
+        gap: 10,
     },
     content: {
         display: 'flex',
@@ -120,7 +126,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         gap: 5,
-        marginTop: 10,
     },
     boton: {
         flex: 1

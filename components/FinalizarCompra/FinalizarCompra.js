@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import ServicioCompra from "../../services/ServiceCompra";
 import { usePerfil } from "../../context/PerfilContext";
 import { useNavigation } from "@react-navigation/core";
+import ContentBox from "../ContentBox/ContentBox";
 
 export default ({ carrito, setCarrito }) => {
 
@@ -90,44 +91,38 @@ export default ({ carrito, setCarrito }) => {
     }
 
     return (
-        <>
-            <View style={styles.container}>
-                <View style={styles.itemPrincipal}>
-                    <Icon name={'file-text'} size={20} color="black" />
-                    <Text style={styles.itemTextPrincipal}>Resumen</Text>
-                </View>
-                <LineaDivisoria></LineaDivisoria>
-                <View style={styles.item}>
-                    <Text>Productos</Text>
-                    <Text style={styles.itemPrecio}>$ {total.toFixed(2)}</Text>
-                </View>
-                <View style={styles.item}>
-                    <Text>Envío </Text>
-                    <Text style={styles.itemPrecio}>$ {tarifaEnvio.toFixed(2)}</Text>
-                </View>
-                <View style={styles.item}>
-                    <Text>Tarifa de servicio</Text>
-                    <Text style={styles.itemPrecio}>$ {tarifaServicio.toFixed(2)}</Text>
-                </View>
-                <LineaDivisoria></LineaDivisoria>
-                <View style={styles.item}>
-                    <Text style={styles.itemTextPrincipal}>Subtotal</Text>
-                    <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>$ {subtotal}</Text>
-                </View>
-                <View style={styles.containerBoton}>
-                    <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={comprar} />
-                    <CustomButton style={styles.boton} text={'Vaciar carrito'} color={'#c31f2d'} width={'auto'} height={'auto'} onPress={() => setCarrito([])} />
-                </View>
+        <ContentBox>
+            <View style={styles.itemPrincipal}>
+                <Icon name={'file-text'} size={20} color="black" />
+                <Text style={styles.itemTextPrincipal}>Resumen</Text>
             </View>
-        </>
+            <LineaDivisoria></LineaDivisoria>
+            <View style={styles.item}>
+                <Text>Productos</Text>
+                <Text style={styles.itemPrecio}>$ {total.toFixed(2)}</Text>
+            </View>
+            <View style={styles.item}>
+                <Text>Envío </Text>
+                <Text style={styles.itemPrecio}>$ {tarifaEnvio.toFixed(2)}</Text>
+            </View>
+            <View style={styles.item}>
+                <Text>Tarifa de servicio</Text>
+                <Text style={styles.itemPrecio}>$ {tarifaServicio.toFixed(2)}</Text>
+            </View>
+            <LineaDivisoria></LineaDivisoria>
+            <View style={styles.item}>
+                <Text style={styles.itemTextPrincipal}>Subtotal</Text>
+                <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>$ {subtotal}</Text>
+            </View>
+            <View style={styles.containerBoton}>
+                <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={comprar} />
+                <CustomButton style={styles.boton} text={'Vaciar carrito'} color={'#c31f2d'} width={'auto'} height={'auto'} onPress={() => setCarrito([])} />
+            </View>
+        </ContentBox>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 16,
-        backgroundColor: 'white',
-    },
     item: {
         display: 'flex',
         flexDirection: 'row',
