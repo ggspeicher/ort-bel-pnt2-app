@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import ServicioCompra from "../../services/ServiceCompra";
 import { usePerfil } from "../../context/PerfilContext";
 import { useNavigation } from "@react-navigation/core";
-import Compras from '../../screens/Compras/Compras';
 
 export default ({ carrito, setCarrito }) => {
 

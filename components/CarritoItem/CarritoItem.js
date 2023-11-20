@@ -2,6 +2,7 @@ import { View, Text, Image, StyleSheet } from "react-native"
 import { ListItem } from '@rneui/themed';
 import { Button } from "@rneui/base";
 import { useEffect, useState } from "react";
+import TextoError from '../../components/TextoError/TextoError';
 
 export default ({ producto, carrito, setCarrito }) => {
 
@@ -78,7 +79,7 @@ export default ({ producto, carrito, setCarrito }) => {
                     <View style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
                         <Text style={{ color: 'gray' }}><Text style={{ fontWeight: 'bold' }}>{cantidad} u.</Text> x $ {precio.toFixed(2)}</Text>
                         <Text>$ {(precio * cantidad).toFixed(2)}</Text>
-                        {maxUnidades ? <Text style={{ color: '#c31f2d', fontWeight: 'bold' }}>MÁX. STOCK</Text> : <Text />}
+                        {maxUnidades ? <TextoError>MÁX. STOCK</TextoError> : <Text />}
                     </View>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>

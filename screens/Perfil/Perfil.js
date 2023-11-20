@@ -5,8 +5,7 @@ import InformacionPersonal from '../../components/InformacionPersonal/Informacio
 import Soporte from '../../components/Soporte/Soporte';
 import Configuracion from '../../components/Configuracion/Configuracion';
 import ExpandedContext from '../../context/ExpandedContext';
-import { useEffect, useState } from 'react';
-import ServicioPerfil from '../../services/ServicioPerfil';
+import { useState } from 'react';
 import { usePerfil } from '../../context/PerfilContext';
 
 export default () => {

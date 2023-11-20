@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
-export default ( { ph, value, set, kbType } ) => {
+export default ( { ph, value, set, kbType, setErrors} ) => {
 
   const keyboardType = String(kbType)
 
@@ -13,13 +13,13 @@ export default ( { ph, value, set, kbType } ) => {
         style={styles.input}
         inputStyle={styles.inputStyle}
         labelStyle={styles.labelStyle}
-        placeholderStyle={styles.placeholderStyle}
-        textErrorStyle={styles.textErrorStyle}
+        placeholderStyle={styles.placeholderStyle}        textErrorStyle={styles.textErrorStyle}
         label="TextInput"
         placeholder={ ph ? ph : 'cargando...'}
         placeholderTextColor="gray"
         onChangeText={text => {
           set(text);
+          setErrors(false)
         }}
         keyboardType={keyboardType}
       />
@@ -30,6 +30,7 @@ export default ( { ph, value, set, kbType } ) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 8,
+    marginBottom: 8,
   },
   input: {
     height: 55,
