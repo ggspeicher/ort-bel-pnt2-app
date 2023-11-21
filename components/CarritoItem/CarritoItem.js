@@ -7,7 +7,7 @@ import ContentBox from "../ContentBox/ContentBox";
 
 export default ({ producto, carrito, setCarrito }) => {
 
-    const { id, nombre, precio, unidades, stock, urlPath } = producto
+    const { id, nombre, precio, unidades, stock, path } = producto
 
     const [cantidad, setCantidad] = useState(unidades);
     const [maxUnidades, setMaxUnidades] = useState(false);
@@ -71,7 +71,7 @@ export default ({ producto, carrito, setCarrito }) => {
             >
                 <ListItem.Content style={{ display: 'flex', flexDirection: 'row', alignItems: "center", gap: 10, justifyContent: 'flex-start', width: '100%', flex: 1 }}>
                     <Image
-                        source={require('../../assets/trago.jpg')}
+                        source={{ uri: path }}
                         style={styles.img}
                     />
                     <View style={{ display: 'flex', flex: 2 }}>
