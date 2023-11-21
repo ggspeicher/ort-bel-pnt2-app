@@ -1,15 +1,39 @@
 import React from 'react';
+import { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useCarrito } from '../../context/CarritoContext';
+
 
 export default function DetalleProducto({ route }) {
   const { producto } = route.params;
   const navigation = useNavigation();
+  const { carrito, setCarrito } = useCarrito();
+  const [cantidad, setCantidad] = useState(0);
+
 
   const agregarAlCarrito = () => {
-    // ** Validar si hay usuario logeado si lo hay, agrega y si no al login **
+    
 
-    // Lógica para agregar el producto al carrito
+    const incrementarUnidades = () => {
+      if (cantidad < producto.stock) {
+          setCantidad((prevCantidad) => prevCantidad + 1);
+      }
+      };
+        const productoParaActualizar = carrito.find((productoCarrito) => productoCarrito.id === producto.id);
+        
+        if (productoParaActualizar) {
+          incrementarUnidades();
+            const carritoActualizado = carrito.map((productoCarrito) =>
+            productoCarrito.id === producto.id ? { ...producto, unidades: cantidad } : producto
+            );
+            setCarrito(carritoActualizado);
+        } else {
+          setCarrito([...carrito, producto]);
+        }
+
+      
+    
     console.log(`Producto ${producto.nombre} agregado al carrito.`);
     navigation.navigate('Productos');
   };

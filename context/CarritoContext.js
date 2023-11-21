@@ -4,17 +4,7 @@ const CarritoContext = createContext();
 
 export const CarritoProvider = ({ children }) => {
 
-    const [carrito, setCarrito] = useState([
-        {
-            id: 1,
-            nombre: 'COMBO 2',
-            unidades: 1,
-            precio: 50.00,
-            stock: 6,
-            urlPath: '../../assets/trago.jpg',
-
-        }
-    ]);
+    const [carrito, setCarrito] = useState([]);
 
     return (
         <CarritoContext.Provider value={{ carrito, setCarrito }}>
