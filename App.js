@@ -44,7 +44,7 @@ export default function App() {
                 ) : (
                   <>
                     <Drawer.Screen name="PerfilStack" component={PerfilStack} options={{ title: 'Perfil' }} />
-                    <Drawer.Screen name="Productos" component={DetalleProductoStack} options={{ title: 'Productos' }} />
+                    <Drawer.Screen name="Nuestra tienda" component={DetalleProductoStack} options={{ title: 'Productos de nuestra tienda' }} />
                     <Drawer.Screen name="Carrito" component={Carrito} />
                   </>
                 )
