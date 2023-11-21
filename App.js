@@ -5,10 +5,10 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Carrito from './screens/Carrito/Carrito';
 import Home from './screens/Home/Home';
-import DetalleProducto from './screens/DetalleProducto/DetalleProducto';
 import { PerfilProvider } from './context/PerfilContext';
 import { CarritoProvider } from './context/CarritoContext';
 import PerfilStack from './stacks/PerfilStack';
+import DetalleProductoStack from './stacks/DetalleProductoStack';
 import LoginStack from './stacks/LoginStack';
 import { useEffect, useState } from 'react';
 import { auth } from './services/config';
@@ -36,8 +36,6 @@ export default function App() {
         <CarritoProvider>
           <NavigationContainer>
             <Drawer.Navigator>
-              <Drawer.Screen name="Productos" component={Home} />
-              <Drawer.Screen name="DetalleProducto" component={DetalleProducto} />
               {
                 !logeado ? (
                   <>
@@ -46,6 +44,7 @@ export default function App() {
                 ) : (
                   <>
                     <Drawer.Screen name="PerfilStack" component={PerfilStack} options={{ title: 'Perfil' }} />
+                    <Drawer.Screen name="Nuestra tienda" component={DetalleProductoStack} options={{ title: 'Productos de nuestra tienda' }} />
                     <Drawer.Screen name="Carrito" component={Carrito} />
                   </>
                 )
