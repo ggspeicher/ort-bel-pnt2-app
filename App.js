@@ -12,6 +12,7 @@ import PerfilStack from './stacks/PerfilStack';
 import LoginStack from './stacks/LoginStack';
 import { useEffect, useState } from 'react';
 import { auth } from './services/config';
+import DetalleProductoStack from './stacks/DetalleProductoStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -37,8 +38,6 @@ export default function App() {
         <CarritoProvider>
           <NavigationContainer>
             <Drawer.Navigator>
-              <Drawer.Screen name="Productos" component={Home} />
-              <Drawer.Screen name="DetalleProducto" component={DetalleProducto} />
               {
                 !logeado ? (
                   <>
@@ -47,6 +46,7 @@ export default function App() {
                 ) : (
                   <>
                     <Drawer.Screen name="PerfilStack" component={PerfilStack} options={{ title: 'Perfil' }} />
+                    <Drawer.Screen name="NuestraTienda" component={DetalleProductoStack} options={{ title: 'Productos de nuestra tienda' }} />
                     <Drawer.Screen name="Carrito" component={Carrito} />
                   </>
                 )
