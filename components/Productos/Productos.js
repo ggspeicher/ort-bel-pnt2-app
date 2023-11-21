@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   productName: {
-    fontSize: 18, // Tamaño más grande para el nombre del producto
-    fontWeight: 'bold', // Texto en negrita para resaltar
-    marginBottom: 5, // Espacio entre el nombre y el precio
+    fontSize: 18, 
+    fontWeight: 'bold', 
+    marginBottom: 5, 
   },
   price: {
-    fontSize: 14, // Tamaño más pequeño para el precio
+    fontSize: 14,
     marginBottom: 5,
   },
 });

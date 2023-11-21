@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useCarrito } from '../../context/CarritoContext';
 
@@ -9,33 +9,40 @@ export default function DetalleProducto({ route }) {
   const { producto } = route.params;
   const navigation = useNavigation();
   const { carrito, setCarrito } = useCarrito();
-  const [cantidad, setCantidad] = useState(0);
 
 
   const agregarAlCarrito = () => {
-    
 
-    const incrementarUnidades = () => {
-      if (cantidad < producto.stock) {
-          setCantidad((prevCantidad) => prevCantidad + 1);
-      }
-      };
-        const productoParaActualizar = carrito.find((productoCarrito) => productoCarrito.id === producto.id);
+        const productoExistente = carrito.find((productoCarrito) => productoCarrito.id === producto.id);
+
+        const handleCarrito = () => {
+          console.log('entre a carrito');
+          navigation.navigate('Carrito');
+        };
         
-        if (productoParaActualizar) {
-          incrementarUnidades();
-            const carritoActualizado = carrito.map((productoCarrito) =>
-            productoCarrito.id === producto.id ? { ...producto, unidades: cantidad } : producto
-            );
-            setCarrito(carritoActualizado);
+        if (productoExistente) {
+          Alert.alert(
+            'Producto ya agregado',
+            'Este producto ya se encuentra en carrito',
+            [
+                {
+                    text: 'Volver',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Confirmar',
+                    onPress: handleCarrito,
+                    style: 'cancel',
+                }
+            ]
+        );
         } else {
           setCarrito([...carrito, producto]);
+          navigation.navigate('Productos');
         }
-
       
     
     console.log(`Producto ${producto.nombre} agregado al carrito.`);
-    navigation.navigate('Productos');
   };
 
   return (
