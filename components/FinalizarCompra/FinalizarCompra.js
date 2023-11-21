@@ -12,7 +12,7 @@ export default ({ carrito, setCarrito }) => {
 
     const navigation = useNavigation();
 
-    const { perfil, obtenerYActualizarPerfil } = usePerfil()
+    const { perfil, actualizarPerfil } = usePerfil()
     const { id } = perfil
 
     const [tarifaEnvio, setTarifaEnvio] = useState(330)
@@ -85,7 +85,7 @@ export default ({ carrito, setCarrito }) => {
         };
 
         await ServicioCompra.agregarCompra(id, compra)
-        await obtenerYActualizarPerfil(id)
+        await actualizarPerfil(id)
         compraExitosa()
         // logica para limpiar carrito TO-DO
     }

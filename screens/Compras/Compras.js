@@ -10,10 +10,11 @@ export default () => {
   const { perfil } = usePerfil()
   const { compras } = perfil
 
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        {compras > 0 ? (
+        {compras ? (
           <>
             <CompraItems compras={compras} />
           </>

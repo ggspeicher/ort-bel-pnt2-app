@@ -14,7 +14,7 @@ export default () => {
 
     const navigation = useNavigation();
 
-    const { perfil, obtenerYActualizarPerfil } = usePerfil()
+    const { perfil, actualizarPerfil } = usePerfil()
     const { id, telefono, direccion } = perfil
 
     const [tel, setTel] = useState(null)
@@ -51,7 +51,7 @@ export default () => {
                 direccion: dir
             }
             await ServicioPerfil.actualizarPerfil(id, obj);
-            await obtenerYActualizarPerfil(id)
+            await actualizarPerfil(id)
             restablecer()
             perfilExitoso()
         }

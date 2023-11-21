@@ -8,10 +8,23 @@ import { ExpandedProvider } from '../../context/ExpandedContext';
 import { usePerfil } from '../../context/PerfilContext';
 import InfoCompras from '../../components/InfoCompras/InfoCompras';
 import { auth } from '../../services/config';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/core';
 
 export default () => {
   const { perfil } = usePerfil();
   const { nombre, imgPerfil } = perfil;
+
+  const navigation = useNavigation()
+
+  const handleCerrarSesion = async () => {
+    try {
+      await auth.signOut();
+    } catch (err) {
+      console.log(err)
+    }
+    navigation.navigate('Productos');
+  }
 
   return (
     <SafeAreaView>
@@ -44,19 +57,21 @@ export default () => {
           <Configuracion />
         </ExpandedProvider>
 
-        <View
-          style={{
-            padding: 20,
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 5,
-            justifyContent: 'center',
-          }}
-        >
-          <Icon name="log-out" size={20} color="#c31f2d" />
-          <Text style={{ color: '#C41E3A' }}>Cerrar sesión</Text>
-        </View>
+        <TouchableOpacity onPress={handleCerrarSesion}>
+          <View
+            style={{
+              padding: 20,
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 5,
+              justifyContent: 'center',
+            }}
+          >
+            <Icon name="log-out" size={20} color="#c31f2d" />
+            <Text style={{ color: '#C41E3A' }}>Cerrar sesión</Text>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

@@ -4,21 +4,31 @@ import { StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Carrito from './screens/Carrito/Carrito';
-import Compras from './screens/Compras/Compras';
 import Home from './screens/Home/Home';
-import Perfil from './screens/Perfil/Perfil';
-import EditarPerfil from './screens/EditarPerfil/EditarPerfil';
 import DetalleProducto from './screens/DetalleProducto/DetalleProducto';
-import Login from './screens/Login/Login';
-import Registro from './screens/Registro/Registro';
 import { PerfilProvider } from './context/PerfilContext';
 import { CarritoProvider } from './context/CarritoContext';
 import PerfilStack from './stacks/PerfilStack';
 import LoginStack from './stacks/LoginStack';
+import { useEffect, useState } from 'react';
+import { auth } from './services/config';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
+
+  const [logeado, setLogeado] = useState(false)
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setLogeado(true)
+      } else {
+        setLogeado(false)
+      }
+    });
+  }, []);
+
   return (
     <>
       <StatusBar style="auto" />
@@ -28,10 +38,18 @@ export default function App() {
             <Drawer.Navigator>
               <Drawer.Screen name="Productos" component={Home} />
               <Drawer.Screen name="DetalleProducto" component={DetalleProducto} />
-              <Drawer.Screen name="LoginStack" component={LoginStack} options={{ title: 'Login' }} />
-
-              <Drawer.Screen name="PerfilStack" component={PerfilStack} options={{ title: 'Perfil' }} />
-              <Drawer.Screen name="Carrito" component={Carrito} />
+              {
+                !logeado ? (
+                  <>
+                    <Drawer.Screen name="LoginStack" component={LoginStack} options={{ title: 'Login' }} />
+                  </>
+                ) : (
+                  <>
+                    <Drawer.Screen name="PerfilStack" component={PerfilStack} options={{ title: 'Perfil' }} />
+                    <Drawer.Screen name="Carrito" component={Carrito} />
+                  </>
+                )
+              }
             </Drawer.Navigator>
           </NavigationContainer>
         </CarritoProvider>
