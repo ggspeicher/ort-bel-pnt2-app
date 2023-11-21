@@ -7,9 +7,9 @@ import ContentBox from "../ContentBox/ContentBox";
 
 export default ({ producto, carrito, setCarrito }) => {
 
-    const { id, nombre, precio, unidades, stock, path } = producto
+    const { id, nombre, precio, stock, path } = producto
 
-    const [cantidad, setCantidad] = useState(unidades);
+    const [cantidad, setCantidad] = useState(1);
     const [maxUnidades, setMaxUnidades] = useState(false);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export default ({ producto, carrito, setCarrito }) => {
         if (productoParaActualizar) {
 
             const carritoActualizado = carrito.map((producto) =>
-                producto.id === id ? { ...producto, unidades: cantidad } : producto
+                producto.id === id ? { ...producto, unidades: cantidad + 1 } : producto
             );
             setCarrito(carritoActualizado);
         }

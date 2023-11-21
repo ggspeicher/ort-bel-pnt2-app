@@ -75,7 +75,7 @@ export default ({ carrito, setCarrito }) => {
                 nombre: producto.nombre,
                 unidades: producto.unidades,
                 precio: producto.precio,
-                urlPath: producto.urlPath
+                urlPath: producto.path
             }));
 
         // agrego: el total gastado de la compra
@@ -89,12 +89,17 @@ export default ({ carrito, setCarrito }) => {
         };
 
         // agrego esa compra al firebase
-        await ServicioCompra.agregarCompra(id, compra)
+        try {
+            await ServicioCompra.agregarCompra(id, compra)
+            compraExitosaAlrta()
+        } catch (err) {
+            console.log(err)
+        }
+
 
         // necesitamos volver a llamar a la bd para reflejar la nueva compra
         await actualizarPerfil(id)
 
-        compraExitosaAlrta()
         // logica para limpiar carrito TO-DO
     }
 

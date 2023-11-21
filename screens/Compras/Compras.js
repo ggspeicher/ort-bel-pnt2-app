@@ -14,7 +14,7 @@ export default () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        {compras ? (
+        {compras && compras.length > 0 ? (
           <>
             <CompraItems compras={compras} />
           </>

@@ -7,7 +7,9 @@ export default ({ texto }) => {
   const navigation = useNavigation();
 
   const irAHome = () => {
-    navigation.navigate('Productos');
+    // https://stackoverflow.com/questions/49826920/how-to-navigate-between-different-nested-stacks-in-react-navigation
+    // al estar en otro ambito de navegacion se necesita hacer esto:
+    navigation.navigate('NuestraTienda', { screen: 'Productos' }); 
   };
 
   return (

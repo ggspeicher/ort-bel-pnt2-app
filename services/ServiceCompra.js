@@ -18,9 +18,10 @@ class ServicioCompra {
       if (!resultadoQuery.empty) {
         const perfilRef = doc(db, 'usuarios', resultadoQuery.docs[0].id);
         await updateDoc(perfilRef, { compras: arrayUnion(nuevaCompra) });
+        
       }
     } catch (err) {
-      console.error('Error al actualizar el perfil: ', err);
+      console.error('Error al realizar la compra: ', err);
     }
   }
 
