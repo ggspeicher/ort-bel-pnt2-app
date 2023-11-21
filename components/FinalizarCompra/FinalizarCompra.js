@@ -51,7 +51,7 @@ export default ({ carrito, setCarrito }) => {
         );
     }
 
-    const compraExitosa = () => {
+    const compraExitosaAlrta = () => {
         Alert.alert(
             'Compra exitosa',
             '¡La compra se ha realizado correctamente!',
@@ -67,6 +67,8 @@ export default ({ carrito, setCarrito }) => {
     const procesoCompra = async () => {
 
         // del carrito solo me guardo la info importante (no hace falta traerme el stock tmb)
+
+        // agrego: un array los detalles de la compra
         const detalles = carrito.map(producto => (
             {
                 id: producto.id,
@@ -76,17 +78,23 @@ export default ({ carrito, setCarrito }) => {
                 urlPath: producto.urlPath
             }));
 
+        // agrego: el total gastado de la compra
         const total = carrito.reduce((total, producto) => total + producto.precio * producto.unidades, 0);
 
+        // agrego: ademas seteo la fecha de ahora. y junto los 3 atributos en 1
         const compra = {
             detalles: detalles,
             fecha: new Date().toISOString(),
             total: total
         };
 
+        // agrego esa compra al firebase
         await ServicioCompra.agregarCompra(id, compra)
+
+        // necesitamos volver a llamar a la bd para reflejar la nueva compra
         await actualizarPerfil(id)
-        compraExitosa()
+
+        compraExitosaAlrta()
         // logica para limpiar carrito TO-DO
     }
 
