@@ -1,5 +1,5 @@
 import { Avatar } from '@rneui/themed';
-import { SafeAreaView, ScrollView, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, ScrollView, View, Text, StyleSheet,Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import InformacionPersonal from '../../components/InformacionPersonal/InformacionPersonal';
 import Soporte from '../../components/Soporte/Soporte';
@@ -20,11 +20,24 @@ export default () => {
   const handleCerrarSesion = async () => {
     try {
       await auth.signOut();
+      cerrarSesionAlert()
     } catch (err) {
       console.log(err)
     }
-    navigation.navigate('Productos');
+    
   }
+
+  const cerrarSesionAlert = () => {
+    Alert.alert(
+        'Cerraste sesión',
+        'Cerraste sesión correctamente',
+        [
+            {
+                text: 'Ok'
+            }
+        ]
+    );
+}
 
   return (
     <SafeAreaView>
