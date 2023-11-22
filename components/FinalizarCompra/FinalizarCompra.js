@@ -24,7 +24,6 @@ export default ({ carrito, setCarrito }) => {
     useEffect(() => {
         const nuevoTotal = carrito.reduce((acumulador, producto) => {
             const subtotal = producto.precio * producto.unidades;
-            console.log(producto.unidades)
             return acumulador + subtotal;
         }, 0);
 
