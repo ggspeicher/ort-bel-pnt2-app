@@ -1,17 +1,17 @@
 import { View, Text, StyleSheet } from "react-native"
 import Icon from 'react-native-vector-icons/Feather';
+import { abreviarTexto, currencyFormat } from "../../services/ServicioGenerales";
 
 export default ( { producto } ) => {
     const { nombre, unidades, precio } = producto
 
-
     return (
     <View style={styles.content}>
         <Icon name='chevron-right' size={10} color="black" />
-        <Text>{nombre}</Text>
-        <Text style={{color: 'gray', marginLeft: 3}}><Text style={{fontWeight: 'bold'}}>{unidades}</Text> u. x $ {(precio)}</Text>
+        <Text>{abreviarTexto(nombre)}</Text>
+        <Text style={{color: 'gray', marginLeft: 3}}><Text style={{fontWeight: 'bold'}}>{unidades}</Text> u. x {currencyFormat(precio)}</Text>
         <View style={styles.total}>
-            <Text>$ {(precio*unidades).toFixed(2)}</Text>
+            <Text>{currencyFormat(precio*unidades)}</Text>
         </View>
     </View>
     )

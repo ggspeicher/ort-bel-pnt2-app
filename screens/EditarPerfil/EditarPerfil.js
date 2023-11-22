@@ -17,8 +17,8 @@ export default () => {
     const { perfil, actualizarPerfil } = usePerfil()
     const { id, telefono, direccion } = perfil
 
-    const [tel, setTel] = useState(null)
-    const [dir, setDirec] = useState(null)
+    const [tel, setTel] = useState(telefono)
+    const [dir, setDirec] = useState(direccion)
 
     // validaciones de la actualizacion de perfil
     const [telErr, setTelErr] = useState(false)
@@ -85,7 +85,7 @@ export default () => {
                             <Icon name='phone' size={20} color="black" />
                             <Text>Teléfono</Text>
                         </View>
-                        <InputDefault ph={telefono} value={tel} set={setTel} kbType={'number-pad'} setErrors={setErrors}></InputDefault>
+                        <InputDefault defaultValue={telefono} value={tel} set={setTel} kbType={'number-pad'} setErrors={setErrors}></InputDefault>
                         {telErr && <TextoError>Teléfono incorrecto</TextoError>}
                     </View>
                     <View>
@@ -93,7 +93,7 @@ export default () => {
                             <Icon name='calendar' size={20} color="black" />
                             <Text>Dirección</Text>
                         </View>
-                        <InputDefault ph={direccion} value={dir} set={setDirec} kbType={'default'} setErrors={setErrors}></InputDefault>
+                        <InputDefault defaultValue={direccion} value={dir} set={setDirec} kbType={'default'} setErrors={setErrors}></InputDefault>
                         {dirErr && <TextoError>Dirección incorrecto</TextoError>}
                     </View>
                     <View style={styles.containerBoton}>

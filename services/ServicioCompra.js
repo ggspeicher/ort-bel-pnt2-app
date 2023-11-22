@@ -5,7 +5,7 @@ import { getDocs, collection, query, where, doc, updateDoc, arrayUnion } from 'f
 // where la uso para agregar filtros a mis consultas.
 
 // ahora me traigo mi referencia de la base de datos
-import { db } from '../services/config';
+import { db } from './config';
 
 class ServicioCompra {
 

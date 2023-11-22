@@ -44,7 +44,7 @@ export default ({ compra, ultimaCompra }) => {
                 <LineaDivisoria></LineaDivisoria>
                 <View style={styles.subtotalBox}>
                     <Text style={styles.subtotalText}>Subtotal</Text>
-                    <Text style={styles.subtotalPrecio}>$ {total.toFixed(2)}</Text>
+                    <Text style={styles.subtotalPrecio}>{total}</Text>
                 </View>
             </View>
         </ContentBox>

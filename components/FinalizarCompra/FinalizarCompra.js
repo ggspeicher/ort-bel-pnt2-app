@@ -3,10 +3,11 @@ import Icon from 'react-native-vector-icons/Feather';
 import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import CustomButton from "../CustomButton/CustomButton";
 import { useEffect, useState } from "react";
-import ServicioCompra from "../../services/ServiceCompra";
+import ServicioCompra from "../../services/ServicioCompra";
 import { usePerfil } from "../../context/PerfilContext";
 import { useNavigation } from "@react-navigation/core";
 import ContentBox from "../ContentBox/ContentBox";
+import { currencyFormat } from "../../services/ServicioGenerales";
 
 export default ({ carrito, setCarrito }) => {
 
@@ -23,6 +24,7 @@ export default ({ carrito, setCarrito }) => {
     useEffect(() => {
         const nuevoTotal = carrito.reduce((acumulador, producto) => {
             const subtotal = producto.precio * producto.unidades;
+            console.log(producto.unidades)
             return acumulador + subtotal;
         }, 0);
 
@@ -51,7 +53,7 @@ export default ({ carrito, setCarrito }) => {
         );
     }
 
-    const compraExitosaAlrta = () => {
+    const compraExitosaAlerta = () => {
         Alert.alert(
             'Compra exitosa',
             '¡La compra se ha realizado correctamente!',
@@ -91,16 +93,16 @@ export default ({ carrito, setCarrito }) => {
         // agrego esa compra al firebase
         try {
             await ServicioCompra.agregarCompra(id, compra)
-            compraExitosaAlrta()
+            compraExitosaAlerta()
         } catch (err) {
             console.log(err)
         }
 
-
         // necesitamos volver a llamar a la bd para reflejar la nueva compra
         await actualizarPerfil(id)
 
-        // logica para limpiar carrito TO-DO
+        // se limpia el carrito
+        setCarrito([])
     }
 
     return (
@@ -112,20 +114,20 @@ export default ({ carrito, setCarrito }) => {
             <LineaDivisoria></LineaDivisoria>
             <View style={styles.item}>
                 <Text>Productos</Text>
-                <Text style={styles.itemPrecio}>$ {total.toFixed(2)}</Text>
+                <Text style={styles.itemPrecio}>{currencyFormat(total)}</Text>
             </View>
             <View style={styles.item}>
                 <Text>Envío </Text>
-                <Text style={styles.itemPrecio}>$ {tarifaEnvio.toFixed(2)}</Text>
+                <Text style={styles.itemPrecio}>{currencyFormat(tarifaEnvio)}</Text>
             </View>
             <View style={styles.item}>
                 <Text>Tarifa de servicio</Text>
-                <Text style={styles.itemPrecio}>$ {tarifaServicio.toFixed(2)}</Text>
+                <Text style={styles.itemPrecio}>{currencyFormat(tarifaServicio)}</Text>
             </View>
             <LineaDivisoria></LineaDivisoria>
             <View style={styles.item}>
                 <Text style={styles.itemTextPrincipal}>Subtotal</Text>
-                <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>$ {subtotal}</Text>
+                <Text style={[styles.itemPrecio, styles.itemTextPrincipal]}>{currencyFormat(subtotal)}</Text>
             </View>
             <View style={styles.containerBoton}>
                 <CustomButton style={styles.boton} text={'Finalizar compra'} color={'#123d5c'} width={'100%'} height={'auto'} onPress={comprar} />
