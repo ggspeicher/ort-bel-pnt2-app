@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { usePerfil } from '../../context/PerfilContext';
 import { getDocs, collection, query } from 'firebase/firestore'
+import ArticleItem from '../../components/ArticleItem/ArticleItem';
 import { db } from '../../services/config'
 
 export default () => {
@@ -36,35 +37,10 @@ export default () => {
 
   return (
     <ScrollView>
-        <>
-            <View style={styles.container}>
-                <Text style={styles.title}>{about.title}</Text>
-
-                <Text style={styles.textDescription}>{about.descripcion}</Text>
-                <Image style={styles.ourImage} source={{ uri: about.image}} />
-            </View>
-        </>
+        <ArticleItem article= { about } />
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 15
-  },
-  textDescription: {
-    fontSize: 18,
-    textAlign: 'justify',
-    lineHeight: 30,
-    marginBottom: 50
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 24
-
-  },
-  ourImage: {
-  height: 200,
-  width: '100%'
-  }
 });
