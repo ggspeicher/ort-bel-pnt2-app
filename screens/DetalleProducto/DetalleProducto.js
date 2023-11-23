@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useCarrito } from '../../context/CarritoContext';
