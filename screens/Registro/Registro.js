@@ -12,6 +12,7 @@ import { app, db } from '../../services/config';
 import { useNavigation } from '@react-navigation/native';
 import { addDoc, collection } from 'firebase/firestore';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 export default Registro = () => {
   const auth = getAuth(app);
@@ -23,13 +24,23 @@ export default Registro = () => {
   const [direccion, setDireccion] = useState('');
   const [telefono, setTelefono] = useState('');
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const handleDateChange = (event, selectedDate) => {
+  const handleDateChange = (selectedDate) => {
+    setDatePickerVisibility(false);
     if (selectedDate) {
       setFechaNacimiento(selectedDate);
     }
   };
 
+  const showDatePickerModal = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
   const returnToLogin = () => {
     navigation.navigate('Login');
   };
@@ -44,7 +55,7 @@ export default Registro = () => {
       );
       const user = userCredential.user;
       console.log('Cuenta creada con éxito:', user);
-      Alert.alert('Usuario creado con éxito, ya puedes iniciar sesión');
+      Alert.alert('Usuario creado con éxito');
 
       // Almacena datos adicionales en Firestore
       const userId = user.uid;
@@ -99,19 +110,37 @@ export default Registro = () => {
         style={styles.input}
         placeholder="Telefono"
         value={telefono}
-        onChangeText={(number) => setTelefono(number)}
+        onChangeText={(number) => {
+          setTelefono(number.replace(/[^0-9()-]/g, ''));
+        }}
+        keyboardType="phone-pad"
       />
       <View style={styles.row}>
         <Text style={styles.labelDate}>Fecha de Nacimiento:</Text>
-        <DateTimePicker
-          value={fechaNacimiento}
+        <TouchableOpacity onPress={showDatePickerModal}>
+          <Text>{fechaNacimiento.toDateString()}</Text>
+        </TouchableOpacity>
+
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
           mode="date"
-          display="default"
-          onChange={handleDateChange}
+          onConfirm={handleDateChange}
+          onCancel={hideDatePicker}
           maximumDate={
             new Date(new Date().setFullYear(new Date().getFullYear() - 18))
           }
         />
+        {showDatePicker && Platform.OS === 'android' && (
+          <DateTimePicker
+            value={fechaNacimiento}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+            maximumDate={
+              new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+            }
+          />
+        )}
       </View>
 
       <TouchableOpacity
@@ -171,5 +200,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 5,
     marginLeft: 10,
+  },
+  datePicker: {
+    width: 200,
   },
 });
