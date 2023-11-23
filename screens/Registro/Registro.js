@@ -24,11 +24,12 @@ export default Registro = () => {
   const [direccion, setDireccion] = useState('');
   const [telefono, setTelefono] = useState('');
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleDateChange = (selectedDate) => {
     setDatePickerVisibility(false);
+    setShowDatePicker(false);
     if (selectedDate) {
       setFechaNacimiento(selectedDate);
     }
@@ -165,8 +166,13 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: 10,
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#555',
+    height: 40,
+    width: '100%',
   },
   title: {
     fontSize: 24,
@@ -197,9 +203,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   labelDate: {
-    marginTop: 10,
-    marginBottom: 5,
-    marginLeft: 10,
+    marginRight: 20,
   },
   datePicker: {
     width: 200,
