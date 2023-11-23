@@ -37,6 +37,7 @@ export default function DetalleProducto({ route }) {
             ]
         );
         } else {
+          producto.unidades = 1
           setCarrito([...carrito, producto]);
           navigation.navigate('Productos');
         }
