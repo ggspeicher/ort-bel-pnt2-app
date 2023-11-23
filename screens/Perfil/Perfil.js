@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView, View, Text, StyleSheet,Alert } from 'react-na
 import Icon from 'react-native-vector-icons/Feather';
 import InformacionPersonal from '../../components/InformacionPersonal/InformacionPersonal';
 import Soporte from '../../components/Soporte/Soporte';
+import Foto from '../../components/Foto/Foto';
 import Configuracion from '../../components/Configuracion/Configuracion';
 import { ExpandedProvider } from '../../context/ExpandedContext';
 import { usePerfil } from '../../context/PerfilContext';
@@ -12,8 +13,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
 
 export default () => {
-  const { perfil } = usePerfil();
-  const { nombre, imgPerfil } = perfil;
+  const { perfil, actualizarPerfil } = usePerfil();
 
   const navigation = useNavigation()
 
@@ -42,26 +42,7 @@ export default () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={{ padding: 20, display: 'flex', alignItems: 'center' }}>
-          <Avatar
-            size={160}
-            rounded
-            source={{
-              uri: imgPerfil
-                ? imgPerfil
-                : 'https://www.centraltrials.com/wp-content/uploads/2016/11/User-Default.jpg',
-            }}
-            avatarStyle={{
-              borderWidth: 4,
-              borderColor: '#123d5c',
-            }}
-          >
-            <Avatar.Accessory style={{ right: 17, bottom: 3 }} size={33} />
-          </Avatar>
-          <Text style={{ marginTop: 5, fontSize: 20, fontWeight: 'bold' }}>
-            {nombre ? nombre : 'cargando...'}
-          </Text>
-        </View>
+        <Foto />
 
         <ExpandedProvider>
           <InformacionPersonal {...perfil} />
