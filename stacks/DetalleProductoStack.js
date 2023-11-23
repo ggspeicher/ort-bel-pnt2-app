@@ -11,7 +11,7 @@ export default () => {
 
         <Stack.Navigator>
             <Stack.Screen name="Productos" component={Home} options={{ title: 'Home', headerShown: false }} />
-            <Stack.Screen name="DetalleProducto" component={DetalleProducto} options={{ title: 'DetalleProducto', headerShown: false }} />
+            <Stack.Screen name="DetalleProducto" component={DetalleProducto} options={{ title: 'DetalleProducto', headerShown: true }} />
         </Stack.Navigator>
     );
 }
