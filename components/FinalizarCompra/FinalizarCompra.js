@@ -59,7 +59,7 @@ export default ({ carrito, setCarrito }) => {
             [
                 {
                     text: 'Ver compras',
-                    onPress: () => { navigation.navigate('Compras') }
+                    onPress: () => { navigation.navigate('ComprasStack') }
                 }
             ]
         );
