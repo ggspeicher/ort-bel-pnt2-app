@@ -7,8 +7,10 @@ import { getDocs, collection, query, where, doc, updateDoc, arrayUnion } from 'f
 // ahora me traigo mi referencia de la base de datos
 import { db } from '../services/config';
 
+// ServicioPerfil lo utilizo para obtener info o actualizar algo en firebase sobre el usuario
 class ServicioPerfil {
 
+  // al pasarle un id me traera el objeto en firebase
   static async obtenerPerfil(userId) {
     const q = query(collection(db, 'usuarios'), where('id', '==', userId));
 
@@ -25,6 +27,7 @@ class ServicioPerfil {
     }
   }
 
+  // al pasarle un nuevo objeto con las propiedades usuario la actualiza en firebase
   static async actualizarPerfil(userId, nuevoPerfil) {
     const q = query(collection(db, 'usuarios'), where('id', '==', userId));
 

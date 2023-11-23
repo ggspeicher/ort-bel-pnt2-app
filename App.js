@@ -21,11 +21,10 @@ export default function App() {
   const [logeado, setLogeado] = useState(false)
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => { // metodo queda pendiente al cierre u inicio de sesion
       if (user) {
         setLogeado(true)
       } else {
-        // por si se cierra sesion se actualiza y lo cambia a false
         setLogeado(false)
       }
     });
