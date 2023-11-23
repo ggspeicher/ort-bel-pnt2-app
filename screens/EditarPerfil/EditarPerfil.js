@@ -50,8 +50,8 @@ export default () => {
                 telefono: tel,
                 direccion: dir
             }
-            await ServicioPerfil.actualizarPerfil(id, obj);
-            await actualizarPerfil(id)
+            await ServicioPerfil.actualizarPerfil(id, obj); // aca lo guardo en firebase
+            await actualizarPerfil(id) // renderizo esa info en la app trayendolo de firebase
             restablecer()
             perfilExitoso()
         }

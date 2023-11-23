@@ -18,8 +18,10 @@ export const PerfilProvider = ({ children }) => {
     });
   }, []);
 
-  // este metodo se usa y se usara en los lugares donde se actualice el usuario en cuestion
-  // ya que al actualizar firebase necesitamos volver a obtener los datos porque si no estariamos con informacion vieja
+  // previamente debere modificar el usuario con ServicioPerfil.actualizarPerfil,
+  // entonces una vez ya en firebase me traigo eso nuevo agregado al estado perfil
+
+  // lo que hago es traerme el perfil de firebase
   const actualizarPerfil = async (userId) => {
     const perfilObtenido = await ServicioPerfil.obtenerPerfil(userId);
     setPerfil(perfilObtenido);
