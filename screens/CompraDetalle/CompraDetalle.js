@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import CompraDetail from '../../components/CompraDetail/CompraDetail';
+import CompraDetailList from '../../components/CompraDetailList/CompraDetailList';
 import { usePerfil } from '../../context/PerfilContext';
 import { View, StyleSheet } from 'react-native';
 
@@ -11,7 +11,7 @@ export default function CompraDetalle({ route }) {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <CompraDetail compra={compra} />
+        <CompraDetailList compra={compra} />
       </View>
     </ScrollView>
   );

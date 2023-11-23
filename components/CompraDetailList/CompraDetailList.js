@@ -1,11 +1,9 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-import { useNavigation } from '@react-navigation/native';
 import moment from 'moment/moment'
 import Icon from 'react-native-vector-icons/Feather';
 import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
-import SubItemCompra from "../SubItemCompra/SubItemCompra";
+import CompraDetailItem from "../CompraDetailItem/CompraDetailItem";
 import MaterialCustomCurrency from "../MaterialCustomCurrency/MaterialCustomCurrency";
-import Badge from "../Badge/Badge";
 import ContentBox from "../ContentBox/ContentBox";
 
 export default ({ compra }) => {
@@ -33,18 +31,7 @@ export default ({ compra }) => {
                     {
                         detalles.map((producto, index) => {
                             return (
-                                <>
-                                    <View style={styles.productoContainer}>
-                                          <Image source={{ uri: producto.urlPath }} style={styles.image} />
-                                          <View style={styles.textoContainer}>
-                                            <Text style={styles.productoNombre}>{producto.nombre}</Text>
-                                            <View style={styles.productoFooter}>
-                                                <Text >Cantidad: {producto.unidades}</Text>
-                                                <MaterialCustomCurrency style={styles.productoTotal} amount={producto.precio * producto.unidades} />
-                                            </View>
-                                          </View>
-                                    </View>
-                                </>
+                               <CompraDetailItem producto={producto} key={index}/>
                             )
                         })
                     }
