@@ -4,6 +4,7 @@ import moment from 'moment/moment'
 import Icon from 'react-native-vector-icons/Feather';
 import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import SubItemCompra from "../SubItemCompra/SubItemCompra";
+import SubItemMas from "../SubItemMas/SubItemMas";
 import MaterialCustomCurrency from "../MaterialCustomCurrency/MaterialCustomCurrency";
 import Badge from "../Badge/Badge";
 import ContentBox from "../ContentBox/ContentBox";
@@ -43,11 +44,18 @@ export default ({ compra, ultimaCompra }) => {
                                 <Text>Productos</Text>
                             </View>
                             {
-                                detalles.map((producto, index) => {
-                                    return (
-                                        <SubItemCompra key={index} producto={producto} />
+                                detalles.length > 2
+                                    ? (
+                                        <>
+                                            <SubItemCompra key={0} producto={detalles[0]} />
+                                            <SubItemMas cantidad= { detalles.length - 1} />
+                                        </>
                                     )
-                                })
+                                    : (
+                                        detalles.map((producto, index) => (
+                                            <SubItemCompra key={index} producto={producto} />
+                                        ))
+                                    )
                             }
                         </View>
                         <LineaDivisoria></LineaDivisoria>
