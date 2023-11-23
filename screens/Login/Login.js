@@ -23,7 +23,7 @@ export default () => {
         console.log('Usuario autenticado:');
         const user = userCredential.user;
         console.log(user);
-        navigation.navigate('PerfilStack');
+        navigation.navigate('NuestraTienda');
       })
       .catch((error) => {
         console.error('Error de autenticación:', error.message);
