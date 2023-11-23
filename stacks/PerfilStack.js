@@ -14,7 +14,7 @@ export default () => {
         // ya que esto ocacionara que se vea duplicado
         <Stack.Navigator>
             <Stack.Screen name="Perfil" component={Perfil} options={{ ...commonOptions, title: 'Tu info', headerShown: false }} />
-            <Stack.Screen name="EditarPerfil" component={EditarPerfil} options={{ ...commonOptions, title: 'Editar perfil' }} />
+            <Stack.Screen name="EditarPerfil" component={EditarPerfil} options={{ title: 'Editar perfil' }} />
             <Stack.Screen name="ComprasStack" component={ComprasStack} options={{ ...commonOptions, title: 'Mis compras',  }} />
         </Stack.Navigator>
         // el title lo uso para que quede prolijo el espaciado de Editar Perfil
