@@ -1,4 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import { commonOptions } from './commons/CommonOptions';
 import DetalleProducto from '../screens/DetalleProducto/DetalleProducto';
 import Home from '../screens/Home/Home';
 
