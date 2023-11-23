@@ -6,10 +6,10 @@ export default ({ compras }) => {
     return (
         <>
             {
-                compras.map((compra, index) => {
+                compras.sort((a, b) => a.fecha < b.fecha ? 1 : -1 ).map((compra, index) => {
 
                     return (
-                        <CompraItem key={index} compra={compra} ultimaCompra={index === compras.length-1}></CompraItem>
+                        <CompraItem key={index} compra={compra} ultimaCompra={index === 0}></CompraItem>
                     )
                 })
             }

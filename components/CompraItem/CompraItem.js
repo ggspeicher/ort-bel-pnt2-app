@@ -1,12 +1,15 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native"
+import { useNavigation } from '@react-navigation/native';
 import moment from 'moment/moment'
 import Icon from 'react-native-vector-icons/Feather';
 import LineaDivisoria from "../LineaDivisoria/LineaDivisoria";
 import SubItemCompra from "../SubItemCompra/SubItemCompra";
+import MaterialCustomCurrency from "../MaterialCustomCurrency/MaterialCustomCurrency";
 import Badge from "../Badge/Badge";
 import ContentBox from "../ContentBox/ContentBox";
 
 export default ({ compra, ultimaCompra }) => {
+    const navigation = useNavigation();
 
     const { detalles, fecha, total } = compra
 
@@ -14,40 +17,48 @@ export default ({ compra, ultimaCompra }) => {
     const dia = moment(fecha).format('DD [de] MMMM YYYY');
     const hora = moment(fecha).format('HH:mm');
 
-
+    const handleCompraDetalle = (compra) => {
+    navigation.navigate('CompraDetalle', {
+      compra
+    });
+    };
     return (
-        <ContentBox>
-            <View style={styles.container}>
-                <View style={styles.content}>
-                    <View style={styles.content}>
-                        <Icon name='calendar' size={20} color="black" />
-                        <Text>{dia} a las {hora}hs</Text>
+        <TouchableWithoutFeedback onPress={() => handleCompraDetalle({compra})}>
+            <View>
+                <ContentBox>
+                    <View style={styles.container}>
+                        <View style={styles.content}>
+                            <View style={styles.content}>
+                                <Icon name='calendar' size={20} color="black" />
+                                <Text>{dia} a las {hora}hs</Text>
+                            </View>
+                            {ultimaCompra && (
+                                <Badge title={'MÁS RECIENTE'} bgColor={'#008f39'}></Badge>
+                            )}
+                        </View>
+                        <LineaDivisoria></LineaDivisoria>
+                        <View style={styles.contentProducts}>
+                            <View style={styles.content}>
+                                <Icon name='file-text' size={20} color="black" />
+                                <Text>Productos</Text>
+                            </View>
+                            {
+                                detalles.map((producto, index) => {
+                                    return (
+                                        <SubItemCompra key={index} producto={producto} />
+                                    )
+                                })
+                            }
+                        </View>
+                        <LineaDivisoria></LineaDivisoria>
+                        <View style={styles.subtotalBox}>
+                            <Text style={styles.subtotalText}>Total</Text>
+                            <MaterialCustomCurrency style={styles.subtotalPrecio} amount={total} currency="ARS"/>
+                        </View>
                     </View>
-                    {ultimaCompra && (
-                        <Badge title={'MÁS RECIENTE'} bgColor={'#008f39'}></Badge>
-                    )}
-                </View>
-                <LineaDivisoria></LineaDivisoria>
-                <View style={styles.contentProducts}>
-                    <View style={styles.content}>
-                        <Icon name='file-text' size={20} color="black" />
-                        <Text>Productos</Text>
-                    </View>
-                    {
-                        detalles.map((producto, index) => {
-                            return (
-                                <SubItemCompra key={index} producto={producto} />
-                            )
-                        })
-                    }
-                </View>
-                <LineaDivisoria></LineaDivisoria>
-                <View style={styles.subtotalBox}>
-                    <Text style={styles.subtotalText}>Subtotal</Text>
-                    <Text style={styles.subtotalPrecio}>{total}</Text>
-                </View>
+                </ContentBox>
             </View>
-        </ContentBox>
+        </TouchableWithoutFeedback>
     )
 }
 
@@ -83,7 +94,8 @@ const styles = StyleSheet.create({
     },
     subtotalPrecio: {
         marginLeft: 'auto',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#008f39'
     },
     subtotalText: {
         fontWeight: 'bold'
