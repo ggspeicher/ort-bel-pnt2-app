@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { addDoc, collection } from 'firebase/firestore';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import CustomButton from '../../components/CustomButton/CustomButton';
 
 export default Registro = () => {
   const auth = getAuth(app);
@@ -144,15 +145,24 @@ export default Registro = () => {
         )}
       </View>
 
-      <TouchableOpacity
-        style={styles.buttonGreen}
+      <CustomButton
+        style={styles.buttonBlue}
+        text={'Registrarse'}
+        color={'#123d5c'}
+        width={'100%'}
+        height={'auto'}
         onPress={handleCreateAccount}
-      >
-        <Text style={styles.buttonText}>Registrarse</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonBlue} onPress={returnToLogin}>
-        <Text style={styles.buttonText}>Ya tengo una cuenta</Text>
-      </TouchableOpacity>
+        marginBottom={10}
+      />
+
+      <CustomButton
+        style={styles.buttonGreen}
+        text={'Ya tengo cuenta'}
+        color={'#c31f2d'}
+        width={'100%'}
+        height={'auto'}
+        onPress={returnToLogin}
+      />
     </View>
   );
 };
@@ -185,18 +195,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 16,
     paddingHorizontal: 10,
-  },
-  buttonGreen: {
-    backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 16,
-  },
-  buttonBlue: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 16,
   },
   buttonText: {
     color: 'white',
