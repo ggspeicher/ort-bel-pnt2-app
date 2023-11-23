@@ -1,18 +1,11 @@
 import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert} from 'react-native';
-import { signInWithEmailAndPassword} from 'firebase/auth';
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../services/config';
 import { useNavigation } from '@react-navigation/native';
+import CustomButton from '../../components/CustomButton/CustomButton';
 
 export default () => {
-  //const app = initializeApp(firebaseConfig);
-  //const auth = getAuth(app);
-
-  //VER ASYNC STORAGE
-
-  // const auth = initializeAuth(app, {
-  //   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-  // });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
@@ -53,15 +46,20 @@ export default () => {
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Iniciar Sesión</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonCrear}
+      <CustomButton
+        text={'Iniciar Sesión'}
+        color={'#123d5c'}
+        width={'100%'}
+        onPress={handleLogin}
+        marginBottom={10}
+      />
+      <CustomButton
+        text={'Crear Cuenta'}
+        color={'#c31f2d'}
+        width={'100%'}
+        height={'auto'}
         onPress={handleCreateAccount}
-      >
-        <Text style={styles.buttonText}>Crear Cuenta</Text>
-      </TouchableOpacity>
+      />
     </View>
   );
 };
@@ -84,17 +82,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 10,
   },
-  button: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  buttonCrear: {
-    backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 5,
-  },
+
   buttonText: {
     color: 'white',
     textAlign: 'center',

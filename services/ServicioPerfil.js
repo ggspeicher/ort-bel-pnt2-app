@@ -10,7 +10,8 @@ import { db } from '../services/config';
 // ServicioPerfil lo utilizo para obtener info o actualizar algo en firebase sobre el usuario
 class ServicioPerfil {
 
-  // al pasarle un id me traera el objeto en firebase
+  // al pasarle un id me traera el objeto en firebase,
+  // me trae el usuario logeado de firebase
   static async obtenerPerfil(userId) {
     const q = query(collection(db, 'usuarios'), where('id', '==', userId));
 

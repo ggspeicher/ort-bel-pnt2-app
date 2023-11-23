@@ -42,8 +42,8 @@ export default () => {
                 imgPerfil: result.assets[0].uri
             }
             const user = auth.currentUser
-            await ServicioPerfil.actualizarPerfil(user.uid, obj);
-            await actualizarPerfil(user.uid)
+            await ServicioPerfil.actualizarPerfil(user.uid, obj); // este actualiza en la base de datos (el del ServicioPerfil)
+            await actualizarPerfil(user.uid) // este actualiza en la app (el del PerfilContext)
             fotoAlert()
         }
     }

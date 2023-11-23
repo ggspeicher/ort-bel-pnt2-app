@@ -12,6 +12,8 @@ import { app, db } from '../../services/config';
 import { useNavigation } from '@react-navigation/native';
 import { addDoc, collection } from 'firebase/firestore';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import CustomButton from '../../components/CustomButton/CustomButton';
 
 export default Registro = () => {
   const auth = getAuth(app);
@@ -23,13 +25,24 @@ export default Registro = () => {
   const [direccion, setDireccion] = useState('');
   const [telefono, setTelefono] = useState('');
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const handleDateChange = (event, selectedDate) => {
+  const handleDateChange = (selectedDate) => {
+    setDatePickerVisibility(false);
+    setShowDatePicker(false);
     if (selectedDate) {
       setFechaNacimiento(selectedDate);
     }
   };
 
+  const showDatePickerModal = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
   const returnToLogin = () => {
     navigation.navigate('Login');
   };
@@ -44,7 +57,7 @@ export default Registro = () => {
       );
       const user = userCredential.user;
       console.log('Cuenta creada con éxito:', user);
-      Alert.alert('Usuario creado con éxito, ya puedes iniciar sesión');
+      Alert.alert('Usuario creado con éxito');
 
       // Almacena datos adicionales en Firestore
       const userId = user.uid;
@@ -99,30 +112,57 @@ export default Registro = () => {
         style={styles.input}
         placeholder="Telefono"
         value={telefono}
-        onChangeText={(number) => setTelefono(number)}
+        onChangeText={(number) => {
+          setTelefono(number.replace(/[^0-9()-]/g, ''));
+        }}
+        keyboardType="phone-pad"
       />
       <View style={styles.row}>
         <Text style={styles.labelDate}>Fecha de Nacimiento:</Text>
-        <DateTimePicker
-          value={fechaNacimiento}
+        <TouchableOpacity onPress={showDatePickerModal}>
+          <Text>{fechaNacimiento.toDateString()}</Text>
+        </TouchableOpacity>
+
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
           mode="date"
-          display="default"
-          onChange={handleDateChange}
+          onConfirm={handleDateChange}
+          onCancel={hideDatePicker}
           maximumDate={
             new Date(new Date().setFullYear(new Date().getFullYear() - 18))
           }
         />
+        {showDatePicker && Platform.OS === 'android' && (
+          <DateTimePicker
+            value={fechaNacimiento}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+            maximumDate={
+              new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+            }
+          />
+        )}
       </View>
 
-      <TouchableOpacity
-        style={styles.buttonGreen}
+      <CustomButton
+        style={styles.buttonBlue}
+        text={'Registrarse'}
+        color={'#123d5c'}
+        width={'100%'}
+        height={'auto'}
         onPress={handleCreateAccount}
-      >
-        <Text style={styles.buttonText}>Registrarse</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonBlue} onPress={returnToLogin}>
-        <Text style={styles.buttonText}>Ya tengo una cuenta</Text>
-      </TouchableOpacity>
+        marginBottom={10}
+      />
+
+      <CustomButton
+        style={styles.buttonGreen}
+        text={'Ya tengo cuenta'}
+        color={'#c31f2d'}
+        width={'100%'}
+        height={'auto'}
+        onPress={returnToLogin}
+      />
     </View>
   );
 };
@@ -136,8 +176,13 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: 10,
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#555',
+    height: 40,
+    width: '100%',
   },
   title: {
     fontSize: 24,
@@ -151,25 +196,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 10,
   },
-  buttonGreen: {
-    backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 16,
-  },
-  buttonBlue: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 16,
-  },
   buttonText: {
     color: 'white',
     textAlign: 'center',
   },
   labelDate: {
-    marginTop: 10,
-    marginBottom: 5,
-    marginLeft: 10,
+    marginRight: 20,
+  },
+  datePicker: {
+    width: 200,
   },
 });
